@@ -54,6 +54,10 @@ export const en = {
     permissionBlockedBody:
       'Camera access is turned off. Enable it in Settings to take a scan.',
     unavailable: 'No camera available on this device.',
+    simulatorTitle: 'Capture needs a real device',
+    simulatorBody:
+      'The simulator has no camera, and the face detector is not built into simulator builds. Run on a physical phone to take a scan. You can still walk through the rest of the app from here.',
+    simulatorContinue: 'Continue with sample data',
     hints: {
       noFace: 'Center your face in the oval',
       multipleFaces: 'Only you in the frame, please',

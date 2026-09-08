@@ -67,6 +67,10 @@ upload. The API check exists to return a readable error, not as the gate.
 ## Conventions
 
 - Node 22 (`.nvmrc`). npm workspaces — install from the repo root.
+- Two iOS build profiles: `npm run ios:sim` and `npm run ios:device`. ML Kit has
+  no arm64-simulator slice, so the detector is excluded from simulator builds.
+  The failure mode if you forget is a misleading "Unable to find a destination"
+  from xcodebuild — see `docs/handoff.md`.
 - Measurement code lives in `packages/shared` and is tested with vitest
   (`npm test`). The Python service holds progress, recommendations and the
   contract mirror, tested with pytest.

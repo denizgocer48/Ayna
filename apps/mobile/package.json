@@ -63,7 +63,16 @@
     "web": "expo start --web",
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
-    "prebuild": "expo prebuild --clean"
+    "prebuild": "expo prebuild --clean",
+    "ios:sim": "node scripts/face-detector.mjs off && expo prebuild --clean -p ios && expo run:ios",
+    "ios:device": "node scripts/face-detector.mjs on && expo prebuild --clean -p ios && expo run:ios --device"
   },
-  "private": true
+  "private": true,
+  "expo": {
+    "autolinking": {
+      "exclude": [
+        "react-native-vision-camera-face-detector"
+      ]
+    }
+  }
 }

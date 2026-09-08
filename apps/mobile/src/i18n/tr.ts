@@ -54,6 +54,10 @@ export const tr: Copy = {
     permissionBlockedBody:
       'Kamera erişimi kapalı. Tarama yapabilmek için Ayarlar\'dan açman gerekiyor.',
     unavailable: 'Bu cihazda kullanılabilir kamera yok.',
+    simulatorTitle: 'Tarama gerçek cihaz istiyor',
+    simulatorBody:
+      'Simulator\'da kamera yok ve yüz dedektörü simulator derlemelerine dahil edilmiyor. Tarama yapmak için fiziksel bir telefonda çalıştır. Buradan uygulamanın geri kalanını yine de gezebilirsin.',
+    simulatorContinue: 'Örnek veriyle devam et',
     hints: {
       noFace: 'Yüzünü ovalin içine al',
       multipleFaces: 'Karede yalnızca sen ol',

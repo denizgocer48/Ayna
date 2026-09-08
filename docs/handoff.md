@@ -29,10 +29,11 @@ cd services/api && ruff check .                     # clean
 cd services/api && pytest -q                        # 11 passed
 ```
 
-The iOS development build was confirmed end to end: `AynaDev.app`
-(`com.ayna.app.dev`) installed on an iPhone 17 simulator, JS bundle clean at
-2269 modules, the Welcome screen renders. Android has **not** been built yet —
-nobody has run `expo run:android`, so treat the first Android build as unproven.
+The iOS development build was confirmed end to end before the face detector was
+added: `AynaDev.app` (`com.ayna.app.dev`) installed on an iPhone 17 simulator and
+the Welcome screen rendered. With the detector linked, a simulator build is
+impossible — see the ML Kit note below. Android has **not** been built at all;
+treat the first Android build as unproven work.
 
 ## Environment setup
 
@@ -70,14 +71,41 @@ The traps below all cost time once already. They are in this order for a reason.
    A Supabase personal access token grants access to every project on the
    account — if one is ever committed, revoke it rather than rewriting history.
 
-7. **Expo Go does not work.** VisionCamera, Skia, MMKV and RevenueCat are native
-   modules. You need a development build:
+7. **Expo Go does not work.** VisionCamera, the ML Kit face detector, Skia, MMKV
+   and RevenueCat are native modules. You need a development build.
+
+8. **ML Kit does not support the arm64 iOS Simulator, and this will cost you an
+   afternoon if you do not know it.** Google's pods set
+   `EXCLUDED_ARCHS[sdk=iphonesimulator*] = arm64`, so on an Apple Silicon Mac a
+   project linking them has no valid simulator architecture at all. The symptom
+   is misleading: `xcodebuild` fails with
+
+   ```
+   error: Unable to find a destination matching the provided destination specifier
+   ```
+
+   which reads like a broken simulator or a stale Xcode, and is neither.
+   Restarting CoreSimulator, booting a different device and passing a UDID all
+   do nothing. Still true of GoogleMLKit 9.0.0 in September 2026.
+
+   There are therefore two build profiles, and switching between them changes
+   which pods are linked, so each switch needs a clean prebuild:
 
    ```bash
    cd apps/mobile
-   npx expo run:ios --device "iPhone 17"     # first build takes 10-15 minutes
-   npx expo run:android                      # unproven, see above
+   npm run ios:device    # links the detector — capture works, simulator will not build
+   npm run ios:sim       # excludes the detector — app runs on a simulator, capture is stubbed
+   npx expo run:android  # unproven, see above
    ```
+
+   `scripts/face-detector.mjs` writes the flag into `package.json`, because
+   Expo autolinking reads the exclusion only from there and offers no
+   environment variable.
+
+   The simulator has no camera in any case, so **the capture path can only be
+   exercised on a physical phone**. On a simulator build the capture screen says
+   so and offers to continue through the rest of the flow, so the interface can
+   still be reviewed.
 
 ## What is real and what is a placeholder
 

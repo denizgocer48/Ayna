@@ -101,6 +101,15 @@ longer than a weekly billing cycle. If a clean, explicitly captured waiver at
 purchase turns out to be workable in practice, weekly becomes available in Turkey
 too — it is the higher-revenue option. Needs a lawyer, not a product decision.
 
+### A detector that runs on the simulator
+
+ML Kit cannot build for an Apple Silicon simulator, which is why there are two
+build profiles. Apple's Vision framework would run on both and needs no Google
+dependency, but it is iOS-only — Android would still need ML Kit, and two
+detectors mean two resolvers and the drift risk the named-point layer exists to
+avoid. Not worth it for a development convenience; revisit only if the two
+profiles prove genuinely painful in daily work.
+
 ### Android
 
 Never built. `expo run:android` has not been run once, so treat the first Android

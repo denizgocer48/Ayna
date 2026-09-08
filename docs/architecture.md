@@ -89,14 +89,24 @@ floor is `held`, not a win.
 Recommendations receive the measurement table and what moved — never an image,
 which the server does not have in any case.
 
-## Native modules
+## Native modules, and the simulator
 
 VisionCamera, the ML Kit face detector, Skia, MMKV and RevenueCat are native
-modules, so **Expo Go cannot run this app**. Development needs a build:
+modules, so **Expo Go cannot run this app**.
+
+ML Kit ships no arm64-simulator slice and its pods exclude that architecture, so
+a project linking them cannot build for an Apple Silicon simulator at all. Two
+profiles exist as a result:
 
 ```bash
-npx expo run:ios --device "iPhone 17"
+npm run ios:device    # detector linked, capture works
+npm run ios:sim       # detector excluded, app runs on a simulator
 ```
+
+Switching changes which pods are linked and needs a clean prebuild. The simulator
+has no camera regardless, so **capture is a physical-device path** — on a
+simulator build the capture screen says so and lets the reviewer continue through
+the rest of the flow.
 
 ## On drawing a mesh over the face
 

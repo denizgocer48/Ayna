@@ -3,10 +3,10 @@ import { router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
 import { useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
-import { Camera } from 'react-native-vision-camera-face-detector';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
 import { CaptureOverlay } from '@/features/scan/capture-overlay';
+import { FaceCamera, faceDetectionSupported } from '@/features/scan/face-camera';
 import { POSE_COPY, POSE_ORDER } from '@/features/scan/poses';
 import { useFaceCapture } from '@/features/scan/use-face-capture';
 import { useTheme } from '@/hooks/use-theme';
@@ -60,6 +60,21 @@ export default function Capture() {
     router.push('/scan/analyzing');
   }
 
+  // A simulator build links no detector and has no camera. Rather than a dead
+  // screen, offer the rest of the flow so the interface can still be reviewed.
+  if (!faceDetectionSupported) {
+    return (
+      <Screen>
+        <View style={{ flex: 1, justifyContent: 'center', gap: spacing.md }}>
+          <Text variant="h1">{t('capture.simulatorTitle')}</Text>
+          <Text tone="secondary">{t('capture.simulatorBody')}</Text>
+        </View>
+        <Button label={t('capture.simulatorContinue')} onPress={submit} />
+        <Button label={t('common.cancel')} variant="ghost" onPress={() => router.back()} />
+      </Screen>
+    );
+  }
+
   if (!hasPermission) {
     return (
       <Screen>
@@ -95,15 +110,10 @@ export default function Capture() {
   return (
     <Screen bleed>
       <View style={styles.frame}>
-        <Camera
+        <FaceCamera
           style={StyleSheet.absoluteFill}
           device={device}
           isActive
-          cameraFacing="front"
-          performanceMode="accurate"
-          runContours
-          runLandmarks
-          runClassifications
           onFacesDetected={onFacesDetected}
           onError={() => track(AnalyticsEvents.captureRejected, { reason: 'camera_error' })}
         />
