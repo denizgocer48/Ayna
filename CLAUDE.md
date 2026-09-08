@@ -5,7 +5,9 @@ Supabase for identity/data/storage.
 
 ## Read first
 
+- `docs/README.md` — index of everything below
 - `docs/handoff.md` — current status, setup traps, what is real vs placeholder
+- `docs/backlog.md` — parked ideas, and ideas already ruled out with reasons
 - `docs/product.md` — the four decisions the whole build rests on, plus positioning
 - `docs/market.md` — what the incumbents got wrong, and the rules that follow
 - `docs/architecture.md` — how a scan flows through the system

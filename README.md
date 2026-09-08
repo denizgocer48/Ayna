@@ -45,8 +45,9 @@ cd services/api && ruff check . && pytest
 
 ## Picking up the project
 
-Start with `docs/handoff.md` — current status, environment traps, what is real
-versus placeholder, and the next task in order.
+Start with `docs/README.md`, which indexes the rest. `docs/handoff.md` has the
+current status, environment traps, what is real versus placeholder, and the next
+task in order.
 
 ## Before changing anything about photos, consent or scoring
 

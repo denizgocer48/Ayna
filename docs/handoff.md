@@ -2,7 +2,10 @@
 
 Last updated: 2026-09-08, at commit `d4ea7de`.
 
-Read `docs/product.md` and `docs/market.md` first, then this file. The product doc explains *why* the
+`docs/README.md` indexes everything. Read `docs/product.md` and
+`docs/market.md` first, then this file. Parked and rejected ideas live in
+`docs/backlog.md` — check it before proposing something, it may already have
+been decided. The product doc explains *why* the
 system is shaped the way it is; several constraints here look arbitrary until
 you have read it.
 
@@ -134,11 +137,11 @@ Skin analysis, pricing, the name and market scope are all now decided — see
 `docs/skin-analysis.md`, `docs/pricing.md` and `docs/product.md` sections 6 and 7.
 What remains open:
 
-1. **How V1 tells its story without skin.** Deferring skin shrinks the
-   today-versus-reachable gap from roughly six points to roughly three, measured
-   against the real scoring code. The two-number headline still works, but it
-   promises progress tracking rather than transformation. Somebody needs to
-   decide whether that is the V1 pitch or whether skin comes back in.
+1. **How V1 tells its story without skin.** Parked deliberately as a future
+   feature discussion — see `docs/backlog.md`. Deferring skin shrinks the
+   today-versus-reachable gap from roughly six points to roughly three, so the
+   V1 pitch is progress tracking rather than transformation. Settle this before
+   the store listing copy is written, not before Faz 1 starts.
    V1 plans a hosted API rather than an in-house model (`skin.py` is written
    provider-agnostic on purpose). Nobody has picked one or priced it. Cost
    scales per scan, so it interacts with pricing.
