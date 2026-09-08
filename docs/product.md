@@ -59,3 +59,53 @@ The pieces are not independent:
   the jawline sub-score is marked `complete: false`.
 - The routine loop is the entire retention story. Without it the app is a
   single-use toy regardless of how good the analysis is.
+
+## 5. Positioning
+
+Written against April Dunford's framework. The evidence for every claim is in
+`docs/market.md`.
+
+**Competitive alternatives.** Umax and LooksMax AI (direct). Skin-analysis apps
+like YouCam (adjacent, female-skewed). A dermatologist or barber (offline). Doing
+nothing, which is what most of the market does.
+
+**Unique attributes.** A score that reproduces across two photos of the same face,
+because it is landmark geometry behind a hard capture-quality gate rather than a
+model asked for an opinion. An explicit separation between what can change and
+what cannot. No social layer at all.
+
+**Value those attributes create.** The user can trust the number enough to act on
+it, and can measure whether eight weeks of effort moved anything. With the
+incumbents they cannot: the top complaint in their reviews is that the same photo
+scores differently each upload.
+
+**Best-fit customer.** Adults 18-35, mixed audience, who already spend money on
+skincare or grooming and want to know whether it is working. Not teenagers
+looking for a verdict on themselves — that audience is where the documented harm
+and the regulatory exposure both sit.
+
+**Market category.** A grooming and skincare *progress tracker* that happens to
+use facial measurement — not a face-rating app. This is a positioning choice and
+also a compliance one: App Store Guideline 1.2 allows removal without notice for
+apps built around objectifying real people.
+
+**One-liner.** *Ayna measures what skincare and grooming actually changed, so you
+can tell progress from wishful thinking.*
+
+**Trends that make this the moment.** Incumbents are large enough to have
+generated a public backlash and a documented list of failures to avoid. Apple
+tightened both age ratings and objectionable-content rules in 2026. The EU AI Act
+biometric provisions land in December 2026. A product designed around those
+constraints from day one has an advantage over one retrofitting them.
+
+## 6. Naming is unresolved
+
+`Ayna` collides with a wall of Turkish mirror utilities in the App Store,
+including an app already called "Ayna AI", and the metaphor argues against the
+positioning — a mirror shows what is already there, this product measures change.
+
+The name is currently hardcoded in the Expo slug, the URL scheme, the bundle ID
+`com.ayna.app`, the npm workspace names and the repo name. Changing it is a
+half-day pre-launch and effectively impossible after the first store submission.
+**Decide before Faz 1 ends.** Criteria and the collision evidence are in
+`docs/market.md`.

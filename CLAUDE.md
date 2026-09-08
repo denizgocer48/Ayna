@@ -6,7 +6,8 @@ Supabase for identity/data/storage.
 ## Read first
 
 - `docs/handoff.md` — current status, setup traps, what is real vs placeholder
-- `docs/product.md` — the four decisions the whole build rests on
+- `docs/product.md` — the four decisions the whole build rests on, plus positioning
+- `docs/market.md` — what the incumbents got wrong, and the rules that follow
 - `docs/architecture.md` — how a scan flows through the system
 - `docs/compliance.md` — the constraints that are legal requirements
 - `docs/roadmap.md` — what each `TODO(faz-N)` marker means
@@ -17,6 +18,20 @@ Supabase for identity/data/storage.
 Never ask an LLM to rate a face — the score must be reproducible across two
 photos in the same session. The LLM writes the recommendation copy, from the
 metric table, never from the image.
+
+**No social layer, ever.** No leaderboard, no ranking against other users, no
+shareable rank card. App Store Guideline 1.2 allows removal *without notice* for
+apps built around "objectification of real people". Percentiles normalise a
+measurement; they are never a scoreboard.
+
+**No subculture vocabulary.** PSL, mogging, ascension, tier labels, mewing.
+`policy_violations()` in `analysis/recommendations.py` blocks them in generated
+copy — do not work around it, and do not let them into the UI or marketing
+either.
+
+**Never infer an attribute from a face.** Age and sex come from the user's
+profile. The EU AI Act prohibits inferring demographic attributes from biometrics
+as of December 2026, and ethnicity is not a normalisation dimension here.
 
 **Consent gates everything.** A scan cannot be created without live biometric
 consent. This is enforced in the API *and* in RLS

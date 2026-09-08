@@ -2,7 +2,7 @@
 
 Last updated: 2026-09-08, at commit `d4ea7de`.
 
-Read `docs/product.md` first, then this file. The product doc explains *why* the
+Read `docs/product.md` and `docs/market.md` first, then this file. The product doc explains *why* the
 system is shaped the way it is; several constraints here look arbitrary until
 you have read it.
 
@@ -132,6 +132,11 @@ fills it in.
 
 None of these block Faz 1. All three block parts of Faz 2 and Faz 4.
 
+0. **The product name.** `Ayna` collides with a wall of mirror utilities in the
+   Turkish App Store and the metaphor works against the positioning. It is
+   hardcoded in the Expo slug, URL scheme, bundle ID, workspace names and repo
+   name — a half-day change now, effectively impossible after the first store
+   submission. This one has a deadline: decide before Faz 1 ends.
 1. **Market and language.** Turkey only, or Turkey plus global? Decides store
    listing copy, consent-text localisation, and which reference populations the
    `metric_norms` rows are fitted against.
