@@ -1,6 +1,40 @@
 # Skin analysis: buy versus build
 
-Researched 2026-09-08. Status: **decision pending.** This document records what
+Researched 2026-09-08. **Decision: skin analysis is deferred out of V1.**
+
+No hosted vendor could produce both a skin-tone-stratified accuracy report and
+the data-handling commitments our legal position requires, and the 2024 KVKK
+amendment means sending images to a foreign processor needs signed safeguards
+rather than a consent checkbox. Building on-device is not a V1 timeline. So V1
+ships front and side geometry plus the routine, and skin follows.
+
+**No code was removed to implement this.** The metric catalogue keeps the seven
+skin definitions, `skin.py` keeps raising `NotImplementedError`, and the scoring
+layer already handles a group with no data: `build_sub_scores` skips a group
+whose metrics are all absent, and `combine` renormalises the weights over the
+groups actually present. Skin returns by implementing `skin.py`, not by
+re-deriving the contract.
+
+## The cost, measured
+
+Deferring skin is not a free scope cut. Measured against the real scoring code,
+with every metric held at the 50th percentile:
+
+| Scenario | Today | Reachable | Gap |
+| --- | --- | --- | --- |
+| With skin | 50.0 | 55.9 | **5.9 points** |
+| Without skin | 50.0 | 52.9 | **2.9 points** |
+
+Only four mutable metrics survive without skin — `eye_aspect_ratio`,
+`jawline_definition`, `lip_fullness_ratio`, `submental_cervical_angle` — and all
+four are `slow`. **No `responsive` metric remains**, because every one of them
+was skin.
+
+Our own `gapCopy()` renders a 2.9-point gap as *"mostly consistency, not
+change"*. That is honest, and it is a much weaker product story than the
+`68 → 79` headline in `docs/product.md`. Anyone picking this up should know that
+V1 without skin sells progress tracking, not transformation — and should not
+write marketing copy that promises otherwise. This document records what
 the research found, not a settled choice.
 
 Seven skin metrics are in the V1 scope: acne density, redness, dark circles, pore

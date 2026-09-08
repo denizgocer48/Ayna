@@ -39,7 +39,11 @@ MEDICAL_TERMS: tuple[str, ...] = (
 # as part of a radicalisation pipeline, and using any of it groups us with the
 # apps documented in docs/market.md. It must never appear in generated copy,
 # in the UI, or in marketing.
-SUBCULTURE_TERMS: tuple[str, ...] = (
+#
+# The subculture's English terms travel into Turkish as loanwords, but it has
+# also grown native Turkish phrasings that an English-only blocklist misses
+# entirely. Both sets are screened.
+SUBCULTURE_TERMS_EN: tuple[str, ...] = (
     "psl",
     "looksmax",
     "looksmaxxing",
@@ -58,23 +62,59 @@ SUBCULTURE_TERMS: tuple[str, ...] = (
     "mewing",
 )
 
+# Turkish-language equivalents. "Kaçıncı ligdesin" (what league are you in) and
+# "hangi tier" are the native phrasings; "çekicilik puanı" and "güzellik puanı"
+# are the rating framing we refuse on positioning grounds even though they are
+# not subculture slang.
+SUBCULTURE_TERMS_TR: tuple[str, ...] = (
+    "lig",
+    "ligdesin",
+    "seviye atlama",
+    "çekicilik puanı",
+    "güzellik puanı",
+    "yüz puanı",
+    "kaçıncı",
+    "altın oran maskesi",
+)
+
+SUBCULTURE_TERMS: tuple[str, ...] = SUBCULTURE_TERMS_EN + SUBCULTURE_TERMS_TR
+
 FORBIDDEN_TOPICS: tuple[str, ...] = MEDICAL_TERMS + SUBCULTURE_TERMS
 
-# Word-boundary matching so "tier" does not fire on "tiered" only by accident,
-# and so "mog" does not match inside "mogul".
+# Turkish has a dotted/dotless i distinction that Python's default casing does
+# not honour: "PUANI".lower() yields "puani", not "puanı", so upper-cased
+# Turkish copy would slip past a naive case-insensitive match. Fold both pairs
+# onto one character before matching. Folding can only widen what the blocklist
+# catches, which is the safe direction for a blocklist.
+def _normalise(text: str) -> str:
+    # Order matters. Lower the two Turkish capital I forms by hand first, since
+    # str.lower() maps "I" to "i" rather than "ı", then collapse the dotted and
+    # dotless forms onto one character. Doing the collapse in a single
+    # translate() would leave an "İ" that had just become "i" unfolded.
+    return text.replace("İ", "i").replace("I", "ı").lower().replace("i", "ı").lower()
+
+
+# Longest-first so a multi-word term is reported as itself rather than as one of
+# its shorter constituents. Word boundaries keep "mog" out of "mogul" and "cure"
+# out of "curetted".
+_TERMS_BY_LENGTH: tuple[str, ...] = tuple(sorted(FORBIDDEN_TOPICS, key=len, reverse=True))
+
 _PATTERN = re.compile(
-    r"\b(" + "|".join(re.escape(term) for term in FORBIDDEN_TOPICS) + r")\b",
-    re.IGNORECASE,
+    r"\b(" + "|".join(re.escape(_normalise(term)) for term in _TERMS_BY_LENGTH) + r")\b",
 )
+
+# Maps a normalised match back to the canonical spelling we report.
+_CANONICAL: dict[str, str] = {_normalise(term): term for term in FORBIDDEN_TOPICS}
 
 
 def policy_violations(text: str) -> list[str]:
-    """Return every blocked term found in ``text``, lowercased and deduplicated.
+    """Return every blocked term found in ``text``, canonicalised and sorted.
 
-    Run this over any copy destined for a user — generated recommendations,
-    but also hardcoded strings if you are unsure. An empty list means clean.
+    Run this over any copy destined for a user — generated recommendations, but
+    also hardcoded strings if you are unsure. An empty list means clean.
     """
-    return sorted({match.group(1).lower() for match in _PATTERN.finditer(text)})
+    found = {_CANONICAL[match.group(1)] for match in _PATTERN.finditer(_normalise(text))}
+    return sorted(found)
 
 
 def generate(metrics: list[MetricResult], goals: list[str], locale: str) -> list[Recommendation]:

@@ -6,7 +6,13 @@ a copy edit.
 
 ## 1. Two numbers, never one
 
-The result screen shows **today's score and the reachable projection**: `68 → 79`.
+The result screen shows **today's score and the reachable projection**.
+
+A `68 → 79` gap is what the design produces *with skin analysis included*. Skin
+is deferred out of V1 (`docs/skin-analysis.md`), and measured against the real
+scoring code the V1 gap is closer to three points than eleven — every
+`responsive` metric was a skin metric. V1 therefore sells progress tracking
+rather than transformation, and the copy must not overstate it.
 
 Today's score alone reads as a verdict on the person. Today-versus-reachable
 reads as a starting point with a route out, which is the product we are actually

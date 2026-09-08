@@ -130,13 +130,15 @@ fills it in.
 
 ## Open product questions
 
-None of these block Faz 1. All three block parts of Faz 2 and Faz 4.
+Skin analysis, pricing, the name and market scope are all now decided — see
+`docs/skin-analysis.md`, `docs/pricing.md` and `docs/product.md` sections 6 and 7.
+What remains open:
 
-1. **Skin analysis provider.** Still open, and now better understood — see
-   `docs/skin-analysis.md`. Every hosted vendor is an unaudited black box on
-   skin-tone accuracy, none publishes the data-handling commitments we need, and
-   the 2024 KVKK amendment means a consent checkbox no longer legalises sending
-   images abroad.
+1. **How V1 tells its story without skin.** Deferring skin shrinks the
+   today-versus-reachable gap from roughly six points to roughly three, measured
+   against the real scoring code. The two-number headline still works, but it
+   promises progress tracking rather than transformation. Somebody needs to
+   decide whether that is the V1 pitch or whether skin comes back in.
    V1 plans a hosted API rather than an in-house model (`skin.py` is written
    provider-agnostic on purpose). Nobody has picked one or priced it. Cost
    scales per scan, so it interacts with pricing.

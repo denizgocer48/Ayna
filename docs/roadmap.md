@@ -3,9 +3,9 @@
 Search the code for `TODO(faz-N)` to find the exact call sites for each phase.
 Product decisions behind this scope: `docs/product.md`.
 
-Estimated 13-15 weeks to a store submission. The scope is wide on purpose — skin
-analysis, the side profile and the routine loop each carry a distinct part of the
-value, and dropping any one of them undercuts the other two.
+Estimated 10-12 weeks to a store submission, after skin analysis was deferred out
+of V1 (see `docs/skin-analysis.md` for why, and for what that costs the reachable
+projection).
 
 ## Faz 0 — skeleton (done)
 
@@ -26,12 +26,11 @@ schema with RLS, CI.
 - Profile: consent withdrawal and full data deletion. Legal requirements — they
   ship in the first release.
 
-## Faz 2 — analysis (5 weeks)
+## Faz 2 — analysis (4 weeks)
 
 - MediaPipe Face Landmarker in the worker.
 - 23 geometric metrics: 17 front, 6 side.
 - Seed `metric_norms` for both sexes across age bands, implement normalisation.
-- Skin analysis: 7 segmentation metrics via a hosted API in V1.
 - Score screen: Skia gauge for today-versus-reachable, sub-score radar, metric
   breakdown gated on entitlement.
 - Recommendations: rule selection over the metric table, then Claude for the
@@ -48,6 +47,13 @@ schema with RLS, CI.
 - RevenueCat products and the `plus` entitlement, webhook into `subscriptions`.
 - `GET /me/quota`, paywall placement after the first result.
 - PostHog funnels: install to first scan to purchase.
+
+## Faz N — skin analysis (deferred)
+
+Not in V1. Blocked on a vendor that will commit in writing to an EU-hosted
+option, a DPA with SCCs, no training reuse and one stated retention period — or
+on a viable on-device model. `skin.py` is written provider-agnostic so this drops
+in without touching the scoring layer. See `docs/skin-analysis.md`.
 
 ## Faz 5 — release (2 weeks)
 

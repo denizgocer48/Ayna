@@ -1,6 +1,21 @@
 # Pricing benchmarks and open decision
 
-Researched 2026-09-08. Status: **decision pending.**
+Researched 2026-09-08. **Decision: billing period differs by market.**
+
+- **English markets** lead with weekly ($6.99), annual ($49.99-$59.99) shown on
+  the same primary screen, monthly demoted to a secondary screen.
+- **Turkey** leads with annual (₺899-₺1,199), weekly (₺179-₺199) available but
+  not the default.
+
+The split is not arbitrary. Turkey's 14-day right of withdrawal under Law 6502 is
+longer than an entire weekly billing cycle, so weekly billing carries refund and
+dispute exposure there that it does not carry elsewhere. Leading with annual in
+Turkey removes that exposure and happens to sit closer to the wellness framing
+the product is positioned around.
+
+Do not lead the Turkish paywall with an unlabelled free trial on a weekly plan.
+Use a clearly labelled paid intro week, an in-app cancel path, and prominent
+annual pricing.
 
 Prices marked "live fetch" were read from the App Store listing itself on that
 date. Everything else is flagged. App pricing moves constantly — re-verify before
