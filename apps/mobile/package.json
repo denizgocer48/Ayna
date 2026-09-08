@@ -64,8 +64,9 @@
     "lint": "expo lint",
     "typecheck": "tsc --noEmit",
     "prebuild": "expo prebuild --clean",
-    "ios:sim": "node scripts/face-detector.mjs off && expo prebuild --clean -p ios && expo run:ios",
-    "ios:device": "node scripts/face-detector.mjs on && expo prebuild --clean -p ios && expo run:ios --device"
+    "ios:sim": "node scripts/face-detector.mjs off && expo prebuild -p ios && expo run:ios",
+    "ios:device": "node scripts/face-detector.mjs on && expo prebuild -p ios && expo run:ios --device",
+    "ios:clean": "expo prebuild --clean -p ios"
   },
   "private": true,
   "expo": {

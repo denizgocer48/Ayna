@@ -88,15 +88,22 @@ The traps below all cost time once already. They are in this order for a reason.
    Restarting CoreSimulator, booting a different device and passing a UDID all
    do nothing. Still true of GoogleMLKit 9.0.0 in September 2026.
 
-   There are therefore two build profiles, and switching between them changes
-   which pods are linked, so each switch needs a clean prebuild:
+   There are therefore two build profiles:
 
    ```bash
    cd apps/mobile
    npm run ios:device    # links the detector — capture works, simulator will not build
    npm run ios:sim       # excludes the detector — app runs on a simulator, capture is stubbed
+   npm run ios:clean     # only when the native project is genuinely broken
    npx expo run:android  # unproven, see above
    ```
+
+   Switching profiles changes which pods are linked, which a plain `expo
+   prebuild` handles — it regenerates the Podfile and re-runs pod install, and
+   only the changed pods recompile. Do not reach for `--clean`: it wipes `ios/`
+   and recompiles every unrelated pod, which is roughly fifteen minutes on an
+   Apple Silicon machine. A first build after `--clean` is genuinely that slow;
+   an incremental one is a minute or two.
 
    `scripts/face-detector.mjs` writes the flag into `package.json`, because
    Expo autolinking reads the exclusion only from there and offers no

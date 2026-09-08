@@ -14,11 +14,16 @@
  * "needs a physical device" state.
  *
  * Autolinking reads this from package.json only — there is no environment
- * variable for it — so the flag has to be written to disk. Switching changes
- * which pods are linked, so it requires a clean prebuild.
+ * variable for it — so the flag has to be written to disk.
  *
- *   node scripts/face-detector.mjs off   # simulator builds
- *   node scripts/face-detector.mjs on    # device builds
+ *   npm run ios:sim      # excludes the detector, then builds
+ *   npm run ios:device   # includes it, then builds to a phone
+ *
+ * Switching profiles only changes which pods are linked, so a plain
+ * `expo prebuild` is enough — it regenerates the Podfile and re-runs pod
+ * install. Wiping ios/ with `--clean` would recompile every unrelated pod for
+ * nothing, which costs about fifteen minutes. `npm run ios:clean` is there for
+ * when the native project is genuinely broken.
  */
 import { readFileSync, writeFileSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
