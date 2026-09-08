@@ -69,8 +69,11 @@ export default ({ config }: ConfigContext): ExpoConfig => ({
         imageWidth: 76,
       },
     ],
-    '@sentry/react-native/expo',
   ],
+
+  // TODO(faz-5): re-add '@sentry/react-native/expo' once a Sentry org and
+  // project exist. The plugin runs sentry-cli during the native build to
+  // upload source maps, and it hard-fails without --org.
 
   experiments: {
     typedRoutes: true,
