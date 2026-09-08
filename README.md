@@ -47,3 +47,18 @@ cd services/api && ruff check . && pytest
 
 Read `docs/compliance.md`. Several constraints in the schema and the onboarding
 flow are legal requirements, not preferences.
+
+## MCP servers
+
+`.mcp.json` is committed and this repo is public, so it holds no credentials —
+it reads them from the environment. Export these in your shell profile before
+starting Claude Code:
+
+```bash
+export SUPABASE_PROJECT_REF=your-project-ref
+export SUPABASE_ACCESS_TOKEN=sbp_...   # never commit this
+```
+
+A Supabase personal access token grants access to every project on the account.
+If one is ever committed, revoke it at supabase.com/dashboard/account/tokens
+rather than trying to rewrite history.
