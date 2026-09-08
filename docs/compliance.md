@@ -22,6 +22,32 @@ characterise a person is special-category data. Consequences already implemented
 - **Withdrawal must work.** Withdrawing consent deletes measurements too, not
   just future processing. `deletion_requests` tracks this.
 
+## Cross-border transfer: consent is not enough any more
+
+Turkey amended KVKK in September 2024 (Law No. 7499). For any **regular or
+repeated** transfer of personal data abroad, explicit consent alone is no longer
+a valid basis. What is required instead is one of: a KVKK adequacy decision,
+appropriate safeguards (standard contractual clauses, binding corporate rules, or
+a written undertaking authorised by the Board), or a narrow incidental exception.
+
+Every scan sent to a foreign processor is, by definition, a repeated transfer.
+
+Consequences for the design:
+
+- **If skin analysis runs through a hosted API abroad, a consent checkbox does
+  not make it lawful.** We would need signed SCCs or an equivalent mechanism with
+  that vendor, plus the same under GDPR for EU users.
+- Facial images remain special-category data under KVKK Art. 6 and GDPR Art. 9,
+  so the stricter safeguard applies, not the lighter one.
+- This is a per-vendor legal cost that sits on top of the per-scan price. Factor
+  it into any buy-versus-build comparison rather than treating it as paperwork.
+- Processing that never leaves the device sidesteps this entirely. That is a
+  strong architectural argument for on-device analysis wherever it is feasible,
+  and it is why the deterministic facial geometry is computed in our own
+  infrastructure rather than bought.
+
+Sources and the vendor-by-vendor assessment are in `docs/skin-analysis.md`.
+
 ## Data minimisation
 
 The source photo is a means to an end. Once metrics are extracted we no longer

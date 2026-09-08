@@ -132,7 +132,11 @@ fills it in.
 
 None of these block Faz 1. All three block parts of Faz 2 and Faz 4.
 
-1. **Skin analysis provider.** Still open — see below.
+1. **Skin analysis provider.** Still open, and now better understood — see
+   `docs/skin-analysis.md`. Every hosted vendor is an unaudited black box on
+   skin-tone accuracy, none publishes the data-handling commitments we need, and
+   the 2024 KVKK amendment means a consent checkbox no longer legalises sending
+   images abroad.
    V1 plans a hosted API rather than an in-house model (`skin.py` is written
    provider-agnostic on purpose). Nobody has picked one or priced it. Cost
    scales per scan, so it interacts with pricing.
