@@ -98,14 +98,53 @@ tightened both age ratings and objectionable-content rules in 2026. The EU AI Ac
 biometric provisions land in December 2026. A product designed around those
 constraints from day one has an advantage over one retrofitting them.
 
-## 6. Naming is unresolved
+## 6. Naming: Ayna, decided
 
-`Ayna` collides with a wall of Turkish mirror utilities in the App Store,
-including an app already called "Ayna AI", and the metaphor argues against the
-positioning — a mirror shows what is already there, this product measures change.
+Decided 2026-09-08. The name stays `Ayna`, with the collision cost accepted
+knowingly. The evidence against it is in `docs/market.md`: the Turkish App Store
+already holds several mirror and makeup utilities using the exact word, one of
+them called "Ayna AI".
 
-The name is currently hardcoded in the Expo slug, the URL scheme, the bundle ID
-`com.ayna.app`, the npm workspace names and the repo name. Changing it is a
-half-day pre-launch and effectively impossible after the first store submission.
-**Decide before Faz 1 ends.** Criteria and the collision evidence are in
-`docs/market.md`.
+Because the brand term is contested, **the store title carries the keywords and
+the brand carries the identity**. This is the standard mitigation and it costs
+nothing:
+
+```
+Turkish store   Ayna: Cilt ve Bakım Takibi
+English store   Ayna: Skincare Progress
+```
+
+App Store allows 30 characters for the title and 30 for the subtitle. The word
+`Ayna` alone would compete against literal mirror apps for a query it cannot
+win; `Ayna: Cilt ve Bakım Takibi` competes for the queries our users actually
+type. Keep the suffix on every listing, in both languages.
+
+Two rules that follow:
+
+- Never ship a store listing whose title is the bare word `Ayna`.
+- Revisit the name if Turkish store search proves unworkable after launch. The
+  identifiers (`com.ayna.app`, the `ayna` slug and URL scheme) are frozen from
+  first submission onward, so a later rename means a new app listing, not an
+  update.
+
+## 7. Market: Turkish and English from day one
+
+Decided 2026-09-08. Both languages ship in the first release rather than Turkish
+first with English later.
+
+What this costs, concretely:
+
+- **Two copy catalogues**, `src/i18n/en.ts` and `tr.ts`. English is the fallback:
+  an untranslated string surfacing in English is recoverable, one surfacing in a
+  language the reader does not know is not.
+- **Consent text in both languages, legally equivalent.** Consent is only valid
+  if the user could read what they agreed to, so `consent_events` records the
+  locale alongside the version. Translate meaning, not words — but never add,
+  soften or remove an obligation in translation.
+- **Two sets of reference distributions.** `metric_norms` rows fitted on a
+  Turkish population do not transfer to a general English-speaking one. This
+  doubles the largest unknown in Faz 2.
+- **Two store listings**, two sets of screenshots, two ASO keyword sets.
+- **An EU legal review becomes a first-release dependency**, not a second-phase
+  one, because an English listing means EU availability and the AI Act biometric
+  provisions land in December 2026.

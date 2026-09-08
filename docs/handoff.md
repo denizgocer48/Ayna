@@ -132,19 +132,15 @@ fills it in.
 
 None of these block Faz 1. All three block parts of Faz 2 and Faz 4.
 
-0. **The product name.** `Ayna` collides with a wall of mirror utilities in the
-   Turkish App Store and the metaphor works against the positioning. It is
-   hardcoded in the Expo slug, URL scheme, bundle ID, workspace names and repo
-   name — a half-day change now, effectively impossible after the first store
-   submission. This one has a deadline: decide before Faz 1 ends.
-1. **Market and language.** Turkey only, or Turkey plus global? Decides store
-   listing copy, consent-text localisation, and which reference populations the
-   `metric_norms` rows are fitted against.
-2. **Skin analysis provider.** V1 plans a hosted API rather than an in-house
-   model (`skin.py` is written provider-agnostic on purpose). Nobody has picked
-   one or priced it. Cost scales per scan, so it interacts with pricing.
-3. **Price point.** RevenueCat products are Faz 4 work, but the price shapes the
+1. **Skin analysis provider.** Still open — see below.
+   V1 plans a hosted API rather than an in-house model (`skin.py` is written
+   provider-agnostic on purpose). Nobody has picked one or priced it. Cost
+   scales per scan, so it interacts with pricing.
+2. **Price point.** RevenueCat products are Faz 4 work, but the price shapes the
    paywall design, so it is worth settling earlier than the implementation.
+
+Name and market scope were open questions and are now settled — `Ayna` stays,
+and Turkish plus English ship together. See `docs/product.md` sections 6 and 7.
 
 ## Next task: Faz 1
 
@@ -155,18 +151,23 @@ Ordered so each step is testable before the next one starts.
    `SUPABASE_JWT_SECRET`.
 2. **Auth.** Apple and Google sign-in. Apple Sign In is mandatory for App Store
    approval when any other social login is offered.
-3. **Onboarding data.** Birth year and sex pickers in
+3. **Finish the translations.** `src/i18n/` covers welcome, the age gate and the
+   consent screen — the legally operative copy. Every other screen still has
+   hardcoded English strings. Move them into the catalogues as you touch each
+   screen; the `CopyKey` type makes a missing key a compile error.
+4. **Onboarding data.** Birth year and sex pickers in
    `(onboarding)/profile.tsx`, goals multi-select in `goals.tsx`. These are not
    cosmetic — they select the normalisation band. Write the row to `profiles`.
-4. **Consent event.** `(onboarding)/consent.tsx` currently only writes to local
+5. **Consent event.** `(onboarding)/consent.tsx` currently only writes to local
    MMKV. It must also insert into `consent_events`, or `has_active_biometric_consent()`
-   returns false and every scan insert is rejected by RLS.
-5. **Camera.** VisionCamera preview, face-oval overlay, frame processor feeding
+   returns false and every scan insert is rejected by RLS. Record the locale
+   with it — there is a `TODO(faz-1)` on the exact line.
+6. **Camera.** VisionCamera preview, face-oval overlay, frame processor feeding
    `evaluateCaptureQuality`. Keep the shutter disabled until it returns `ok`.
    Front pose first; wire the optional side pose after front works end to end.
-6. **Upload.** Storage path `scans/<user_id>/<scan_id>.jpg`. The RLS policy will
+7. **Upload.** Storage path `scans/<user_id>/<scan_id>.jpg`. The RLS policy will
    reject the upload unless consent and quota both pass — test that it does.
-7. **Profile screen.** Consent withdrawal and full data deletion. These are
+8. **Profile screen.** Consent withdrawal and full data deletion. These are
    legal requirements, not backlog items: they ship in the first release.
    `DELETE /scans/{id}` has a `TODO(faz-1)` waiting.
 

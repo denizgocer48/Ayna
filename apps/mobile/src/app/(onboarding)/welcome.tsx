@@ -2,23 +2,23 @@ import { router } from 'expo-router';
 import { View } from 'react-native';
 
 import { Button, Screen, Text } from '@/components/ui';
+import { t } from '@/i18n';
 import { spacing } from '@/theme';
 
 export default function Welcome() {
   return (
     <Screen>
       <View style={{ flex: 1, justifyContent: 'center', gap: spacing.md }}>
-        <Text variant="display">Ayna</Text>
+        <Text variant="display">{t('welcome.title')}</Text>
         <Text variant="h3" tone="secondary">
-          Track your grooming and skincare progress with measurements, not guesswork.
+          {t('welcome.tagline')}
         </Text>
         <Text variant="bodySm" tone="muted">
-          Ayna measures facial proportions from a photo you take, turns them into a
-          progress baseline, and builds a routine around what you can actually change.
+          {t('welcome.body')}
         </Text>
       </View>
 
-      <Button label="Get started" onPress={() => router.push('/(onboarding)/age-gate')} />
+      <Button label={t('welcome.cta')} onPress={() => router.push('/(onboarding)/age-gate')} />
     </Screen>
   );
 }
