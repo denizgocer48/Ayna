@@ -154,31 +154,22 @@ class CaptureQuality(BaseModel):
     confidence: float
 
 
-class ScanImageInput(BaseModel):
-    pose: Pose
-    imagePath: str = Field(min_length=1)
-    quality: CaptureQuality
+class Capture(BaseModel):
+    """Pose and quality report. No image reference — the image is never sent."""
 
-
-class CreateScanRequest(BaseModel):
-    images: list[ScanImageInput] = Field(min_length=1, max_length=2)
-
-
-class CreateScanResponse(BaseModel):
-    scanId: str
-    status: ScanStatus
-
-
-class ScanImage(BaseModel):
     pose: Pose
     quality: CaptureQuality
-    imagePath: str | None
 
 
 class Measurement(BaseModel):
     key: str
     value: float
     unit: Unit
+
+
+class CreateScanRequest(BaseModel):
+    captures: list[Capture] = Field(min_length=1, max_length=2)
+    measurements: list[Measurement] = Field(min_length=1)
 
 
 class MetricChange(BaseModel):
@@ -217,11 +208,17 @@ class Recommendation(BaseModel):
     horizonWeeks: int
 
 
+class CreateScanResponse(BaseModel):
+    scanId: str
+    status: ScanStatus
+    progress: "Progress | None"
+
+
 class ScanResult(BaseModel):
     scanId: str
     status: ScanStatus
     capturedAt: datetime
-    images: list[ScanImage]
+    captures: list[Capture]
     measurements: list[Measurement]
     progress: Progress | None
     recommendations: list[Recommendation]

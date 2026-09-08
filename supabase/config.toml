@@ -23,6 +23,10 @@ enable_signup = true
 [auth.email]
 enable_confirmations = true
 
+# Kept enabled because the local stack's storage schema must exist for the
+# initial migration to apply. Nothing is stored: analysis runs on the device and
+# only derived measurements are uploaded, and migration 20260909010000 revokes
+# every policy on the scans bucket. See docs/architecture.md.
 [storage]
 enabled = true
 file_size_limit = "10MiB"

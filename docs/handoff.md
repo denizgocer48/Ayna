@@ -95,7 +95,8 @@ fills it in.
 | Capture quality gate | `apps/mobile/src/features/scan/quality.ts` | Pure function over landmark signals. Camera adapter not yet written. |
 | Database schema | `supabase/migrations/` | Three migrations, applied and verified against a local stack. |
 | RLS behaviour | `supabase/tests/rls.sql` | Nine assertions covering consent, quota, withdrawal, cross-user isolation and the append-only consent log. Caught a real ordering bug. |
-| Facial measurements | `services/api/app/analysis/metrics.py` | All 23 geometric metrics implemented and tested, including scale, translation and rotation invariance. |
+| Facial measurements | `packages/shared/src/measure.ts` | All 23 geometric metrics, on-device, with scale, translation and rotation invariance asserted by test. |
+| Detector resolution | `packages/shared/src/resolve-points.ts` | ML Kit contours to named anatomical points. Assigns sides geometrically, refuses to invent a missing landmark. |
 | Theming | `apps/mobile/src/theme/` | Dark-first tokens. Never hardcode a colour; the lint does not catch it but review will. |
 | Navigation + consent flow | `apps/mobile/src/app/` | Age gate blocks under-18s, consent checkbox gates the Continue button. |
 
@@ -161,23 +162,29 @@ Ordered so each step is testable before the next one starts.
    `SUPABASE_JWT_SECRET`.
 2. **Auth.** Apple and Google sign-in. Apple Sign In is mandatory for App Store
    approval when any other social login is offered.
-3. **Finish the translations.** `src/i18n/` covers welcome, the age gate and the
+3. **Wire the camera to the measurement pipeline.** `react-native-vision-camera-face-detector`
+   is installed and compatible with the versions in use. The frame processor
+   feeds `evaluateCaptureQuality`; on capture, `resolveFrontPoints` then
+   `measureAll` produce the numbers to upload. Nothing here needs a server.
+4. **Finish the translations.** `src/i18n/` covers welcome, the age gate and the
    consent screen — the legally operative copy. Every other screen still has
    hardcoded English strings. Move them into the catalogues as you touch each
    screen; the `CopyKey` type makes a missing key a compile error.
-4. **Onboarding data.** Birth year and sex pickers in
+5. **Onboarding data.** Birth year and sex pickers in
    `(onboarding)/profile.tsx`, goals multi-select in `goals.tsx`. These are not
    cosmetic — they select the normalisation band. Write the row to `profiles`.
-5. **Consent event.** `(onboarding)/consent.tsx` currently only writes to local
+6. **Consent event.** `(onboarding)/consent.tsx` currently only writes to local
    MMKV. It must also insert into `consent_events`, or `has_active_biometric_consent()`
    returns false and every scan insert is rejected by RLS. Record the locale
    with it — there is a `TODO(faz-1)` on the exact line.
-6. **Camera.** VisionCamera preview, face-oval overlay, frame processor feeding
+7. **Camera overlay.** VisionCamera preview, face-oval overlay, frame processor feeding
    `evaluateCaptureQuality`. Keep the shutter disabled until it returns `ok`.
    Front pose first; wire the optional side pose after front works end to end.
-7. **Upload.** Storage path `scans/<user_id>/<scan_id>.jpg`. The RLS policy will
-   reject the upload unless consent and quota both pass — test that it does.
-8. **Profile screen.** Consent withdrawal and full data deletion. These are
+8. **Upload.** `POST /scans` with the captures and the measurements. No image is
+   sent. The RLS policy rejects the insert unless consent and quota both pass —
+   `supabase/tests/rls.sql` already asserts that; make sure the client surfaces
+   the failure rather than swallowing it.
+9. **Profile screen.** Consent withdrawal and full data deletion. These are
    legal requirements, not backlog items: they ship in the first release.
    `DELETE /scans/{id}` has a `TODO(faz-1)` waiting.
 

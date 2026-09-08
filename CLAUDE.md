@@ -39,8 +39,14 @@ as of December 2026, and ethnicity is not a normalisation dimension here.
 consent. This is enforced in the API *and* in RLS
 (`has_active_biometric_consent`). Do not remove either layer.
 
-**The photo is deleted after analysis** unless the user pinned it. Face images
-and landmark arrays never reach logs, analytics or Sentry.
+**The photo never leaves the device.** Measurement runs on the phone; only the
+23 derived scalars are uploaded. A landmark set is a biometric template and must
+not be sent either — only the measurements. This is what removed the KVKK
+cross-border problem, and re-introducing any image upload brings it back.
+
+**The detector lives behind `resolve-points.ts`.** `measureAll` works from named
+anatomical points and must never learn detector indices. That layer is why the
+detector could change from MediaPipe to ML Kit without touching the arithmetic.
 
 **The projection must stay honest.** The result screen shows today's score
 and a reachable projection (`68 → 79`). `fixed` metrics — bone geometry — are
@@ -61,6 +67,9 @@ upload. The API check exists to return a readable error, not as the gate.
 ## Conventions
 
 - Node 22 (`.nvmrc`). npm workspaces — install from the repo root.
+- Measurement code lives in `packages/shared` and is tested with vitest
+  (`npm test`). The Python service holds progress, recommendations and the
+  contract mirror, tested with pytest.
 - Mobile: feature-first under `src/features`, shared primitives in
   `src/components/ui`, design tokens in `src/theme`. Never hardcode a colour.
 - API responses parse through zod at the boundary (`src/lib/api.ts`), so

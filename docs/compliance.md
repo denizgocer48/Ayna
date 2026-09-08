@@ -22,42 +22,43 @@ characterise a person is special-category data. Consequences already implemented
 - **Withdrawal must work.** Withdrawing consent deletes measurements too, not
   just future processing. `deletion_requests` tracks this.
 
-## Cross-border transfer: consent is not enough any more
+## Cross-border transfer: solved by not transferring
 
 Turkey amended KVKK in September 2024 (Law No. 7499). For any **regular or
 repeated** transfer of personal data abroad, explicit consent alone is no longer
-a valid basis. What is required instead is one of: a KVKK adequacy decision,
-appropriate safeguards (standard contractual clauses, binding corporate rules, or
-a written undertaking authorised by the Board), or a narrow incidental exception.
+a valid basis: it requires an adequacy decision, appropriate safeguards
+(standard contractual clauses, binding corporate rules, or a Board-authorised
+undertaking), or a narrow incidental exception. Every scan sent to a foreign
+processor would be, by definition, a repeated transfer.
 
-Every scan sent to a foreign processor is, by definition, a repeated transfer.
+**The architecture removes the problem rather than papering over it.** The
+photograph and its landmarks never leave the device; only 23 derived scalar
+measurements are uploaded. There is no image transfer to safeguard.
 
-Consequences for the design:
+Two consequences to hold on to:
 
-- **If skin analysis runs through a hosted API abroad, a consent checkbox does
-  not make it lawful.** We would need signed SCCs or an equivalent mechanism with
-  that vendor, plus the same under GDPR for EU users.
-- Facial images remain special-category data under KVKK Art. 6 and GDPR Art. 9,
-  so the stricter safeguard applies, not the lighter one.
-- This is a per-vendor legal cost that sits on top of the per-scan price. Factor
-  it into any buy-versus-build comparison rather than treating it as paperwork.
-- Processing that never leaves the device sidesteps this entirely. That is a
-  strong architectural argument for on-device analysis wherever it is feasible,
-  and it is why the deterministic facial geometry is computed in our own
-  infrastructure rather than bought.
-
-Sources and the vendor-by-vendor assessment are in `docs/skin-analysis.md`.
+- **Uploading landmarks would not have solved this.** A 478-point face mesh is
+  effectively a biometric template and remains special-category data. Only the
+  derived measurements are safe to send — you cannot reconstruct or identify a
+  person from 23 ratios.
+- **A hosted skin-analysis API would reopen it**, because it needs the image.
+  That is now a second, independent reason skin analysis stays deferred, and a
+  reason any future implementation should be on-device. See
+  `docs/skin-analysis.md`.
 
 ## Data minimisation
 
-The source photo is a means to an end. Once metrics are extracted we no longer
-need it, and retaining it is the largest privacy liability in the product.
+The strongest form of data minimisation is not collecting the data, and that is
+what the architecture does: no image and no landmark set is ever transmitted or
+stored server-side.
 
-- `DELETE_IMAGE_AFTER_ANALYSIS=true` is the default.
-- `scans.image_retained` marks the exception: a photo the user explicitly pinned
-  to their progress timeline.
+- Progress photographs for the before/after view stay in the app's own storage
+  on the device. Deleting a scan deletes the local photo in the same action.
 - Face images and landmark arrays must never reach analytics, logs or Sentry
-  (`send_default_pii=False`).
+  (`send_default_pii=False`). They do not exist on the server, so this is about
+  the client.
+- Migration `20260909010000_on_device.sql` revokes every policy on the scans
+  storage bucket. Nothing can be uploaded to it.
 
 ## Age
 

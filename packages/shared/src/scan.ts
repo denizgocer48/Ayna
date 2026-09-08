@@ -24,13 +24,16 @@ export const recommendationSchema = z.object({
 });
 export type Recommendation = z.infer<typeof recommendationSchema>;
 
-export const scanImageSchema = z.object({
+/**
+ * A capture is its pose and its quality report. There is no image reference,
+ * because the image is never sent — measurement happens on the device and only
+ * the derived scalars are uploaded. See docs/architecture.md.
+ */
+export const captureSchema = z.object({
   pose: poseSchema,
   quality: captureQualitySchema,
-  /** Null once the source object is deleted post-analysis. */
-  imagePath: z.string().nullable(),
 });
-export type ScanImage = z.infer<typeof scanImageSchema>;
+export type Capture = z.infer<typeof captureSchema>;
 
 /**
  * What a group of metrics did between two scans.
@@ -64,7 +67,7 @@ export const scanResultSchema = z.object({
   scanId: z.string().uuid(),
   status: scanStatusSchema,
   capturedAt: z.string().datetime(),
-  images: z.array(scanImageSchema).min(1).max(2),
+  captures: z.array(captureSchema).min(1).max(2),
 
   /** Raw measurements. No score, no percentile, no ranking against anyone. */
   measurements: z.array(measurementSchema),
@@ -83,25 +86,26 @@ export type ScanResult = z.infer<typeof scanResultSchema>;
 
 // --- API contract -----------------------------------------------------------
 
+/**
+ * A completed scan, measured on the device.
+ *
+ * The server receives numbers, never pixels. It stores them, computes progress
+ * against the user's baseline, and generates the routine. Nothing queues and
+ * nothing polls, because the analysis is already done when this request is made.
+ */
 export const createScanRequestSchema = z.object({
   /** One entry per captured pose. Front is required; side is optional. */
-  images: z
-    .array(
-      z.object({
-        pose: poseSchema,
-        /** Supabase Storage object path. The API fetches it with a signed URL. */
-        imagePath: z.string().min(1),
-        quality: captureQualitySchema,
-      }),
-    )
-    .min(1)
-    .max(2),
+  captures: z.array(captureSchema).min(1).max(2),
+  /** The derived measurements. Not identifying: 23 ratios are not a face. */
+  measurements: z.array(measurementSchema).min(1),
 });
 export type CreateScanRequest = z.infer<typeof createScanRequestSchema>;
 
 export const createScanResponseSchema = z.object({
   scanId: z.string().uuid(),
   status: scanStatusSchema,
+  /** Present from the second scan onward. */
+  progress: progressSchema.nullable(),
 });
 export type CreateScanResponse = z.infer<typeof createScanResponseSchema>;
 

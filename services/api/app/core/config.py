@@ -17,10 +17,9 @@ class Settings(BaseSettings):
     # scan so an old result stays explainable after the engine moves on.
     engine_version: str = "0.1.0"
 
-    # Data minimisation: the source image is a means to an end. Once metrics are
-    # extracted we do not need it, and keeping it is the single largest privacy
-    # liability in the product.
-    delete_image_after_analysis: bool = True
+    # No image ever reaches this service. Measurement runs on the device and
+    # only derived scalars are uploaded, so there is nothing here to retain or
+    # delete. See docs/architecture.md.
 
 
 @lru_cache

@@ -9,8 +9,8 @@ actually change.
 | Path               | What it is                                        |
 | ------------------ | ------------------------------------------------- |
 | `apps/mobile`      | Expo SDK 57, expo-router, TypeScript               |
-| `packages/shared`  | zod schemas — the app/API contract                 |
-| `services/api`     | FastAPI: landmarks, metrics, scoring               |
+| `packages/shared`  | contract, geometry, measurements — runs on device  |
+| `services/api`     | FastAPI: storage, progress, recommendations        |
 | `supabase/`        | Postgres schema, RLS policies, storage buckets     |
 | `docs/`            | architecture, compliance, roadmap                  |
 
@@ -40,6 +40,7 @@ npx eas build --profile development --platform ios
 ```bash
 npm run typecheck             # every workspace
 npm run lint
+npm test                      # vitest: geometry, measurements, resolver
 cd services/api && ruff check . && pytest
 
 # Database and RLS, against a local stack
