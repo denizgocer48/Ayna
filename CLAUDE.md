@@ -1,7 +1,9 @@
 # Ayna — working notes
 
-Facial-measurement grooming coach. Expo mobile app, FastAPI analysis service,
-Supabase for identity/data/storage.
+Facial-measurement grooming coach. Measurement runs on the device; the FastAPI
+service stores measurements, computes progress and generates the routine.
+Supabase provides identity and the database — no file storage, because no image
+is ever uploaded.
 
 ## Read first
 
@@ -16,15 +18,15 @@ Supabase for identity/data/storage.
 
 ## Non-negotiables
 
-**Scoring stays deterministic.** Metrics are geometry computed from landmarks.
-Never ask an LLM to rate a face — the score must be reproducible across two
-photos in the same session. The LLM writes the recommendation copy, from the
-metric table, never from the image.
+**Measurement stays deterministic.** Metrics are geometry computed from
+landmarks. Never ask an LLM to rate a face — the same face measured twice in one
+session must give the same numbers. The LLM writes the recommendation copy from
+the measurement table, never from the image.
 
 **No social layer, ever.** No leaderboard, no ranking against other users, no
-shareable rank card. App Store Guideline 1.2 allows removal *without notice* for
-apps built around "objectification of real people". Percentiles normalise a
-measurement; they are never a scoreboard.
+shareable rank card, no "top X% of men". App Store Guideline 1.2 allows removal
+*without notice* for apps built around "objectification of real people", and
+every incumbent leads with exactly that framing.
 
 **No subculture vocabulary.** PSL, mogging, ascension, tier labels, mewing.
 `policy_violations()` in `analysis/recommendations.py` blocks them in generated
@@ -48,21 +50,28 @@ cross-border problem, and re-introducing any image upload brings it back.
 anatomical points and must never learn detector indices. That layer is why the
 detector could change from MediaPipe to ML Kit without touching the arithmetic.
 
-**The projection must stay honest.** The result screen shows today's score
-and a reachable projection (`68 → 79`). `fixed` metrics — bone geometry — are
-excluded from that projection, and the gain caps in `REACHABLE_GAIN` are there
-to stop it overpromising. Widening them to make the paywall more attractive is
-how the product dies at week eight.
+**There is no score, and progress must stay honest.** The product reports
+measurements and change against the user's own first scan. A percentile was
+removed rather than grounded — `docs/norms.md` records that a third of the
+metrics have no published reference distribution and that nothing validates our
+landmark source against the literature.
+
+`analysis/progress.py` enforces two refusals that the UI must never work around:
+a `fixed` metric can never show progress, because movement in bone geometry is
+measurement noise; and movement inside `NOISE_FLOOR` is `held`, not a win. Those
+floors are conservative guesses, not measurements — lowering them to make
+progress look better is how the product dies at week eight.
 
 **Adding a metric touches three places** or it does not ship:
 `packages/shared/src/metrics.ts` (key + `METRIC_META` + a group),
-`services/api/app/schemas.py` (`_METRIC_ROWS` + the group), and a `metric_norms`
-row. `tests/test_contract.py` compares the two catalogues position by position
-and fails CI on any drift.
+`packages/shared/src/measure.ts` (the implementation), and
+`services/api/app/schemas.py` (`_METRIC_ROWS` + the group).
+`tests/test_contract.py` compares the two catalogues position by position and
+fails CI on any drift.
 
 **Quota is enforced in the database.** One free scan, then an active
-entitlement — `can_start_scan()` gates both the `scans` insert and the storage
-upload. The API check exists to return a readable error, not as the gate.
+entitlement — `can_start_scan()` gates the `scans` insert. The API check exists
+to return a readable error, not as the gate.
 
 ## Conventions
 
