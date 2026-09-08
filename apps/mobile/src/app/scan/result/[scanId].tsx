@@ -1,7 +1,6 @@
-import { useLocalSearchParams } from 'expo-router';
+import { router, useLocalSearchParams } from 'expo-router';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
-import { router } from 'expo-router';
 
 /**
  * TODO(faz-2): score gauge (Skia), sub-score radar, metric breakdown behind the

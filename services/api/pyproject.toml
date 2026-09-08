@@ -29,6 +29,11 @@ target-version = "py312"
 [tool.ruff.lint]
 select = ["E", "F", "I", "N", "UP", "B", "SIM"]
 
+[tool.ruff.lint.per-file-ignores]
+# Wire-format mirrors of packages/shared: field names must match the TypeScript
+# contract exactly, so camelCase here is deliberate.
+"app/schemas.py" = ["N815"]
+
 [tool.mypy]
 python_version = "3.12"
 strict = true
