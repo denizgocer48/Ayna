@@ -5,4 +5,5 @@ export * from './metrics';
 export * from './monetization';
 export * from './profile';
 export * from './resolve-points';
+export * from './sample-face';
 export * from './scan';

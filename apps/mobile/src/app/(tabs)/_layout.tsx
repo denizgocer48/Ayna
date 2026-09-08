@@ -3,6 +3,7 @@ import { SymbolView } from 'expo-symbols';
 import type { ColorValue } from 'react-native';
 
 import { useTheme } from '@/hooks/use-theme';
+import { t } from '@/i18n';
 
 function TabIcon({ name, color }: { name: string; color: ColorValue }) {
   return <SymbolView name={name as never} tintColor={color} size={26} />;
@@ -23,28 +24,28 @@ export default function TabsLayout() {
       <Tabs.Screen
         name="index"
         options={{
-          title: 'Home',
+          title: t('tabs.home'),
           tabBarIcon: ({ color }) => <TabIcon name="house" color={color} />,
         }}
       />
       <Tabs.Screen
         name="plan"
         options={{
-          title: 'Plan',
+          title: t('tabs.plan'),
           tabBarIcon: ({ color }) => <TabIcon name="checklist" color={color} />,
         }}
       />
       <Tabs.Screen
         name="progress"
         options={{
-          title: 'Progress',
+          title: t('tabs.progress'),
           tabBarIcon: ({ color }) => <TabIcon name="chart.line.uptrend.xyaxis" color={color} />,
         }}
       />
       <Tabs.Screen
         name="profile"
         options={{
-          title: 'Profile',
+          title: t('tabs.profile'),
           tabBarIcon: ({ color }) => <TabIcon name="person" color={color} />,
         }}
       />

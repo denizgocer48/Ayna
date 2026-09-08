@@ -36,6 +36,21 @@ export const tr: Copy = {
       'Ayna biyometrik veri sayılan yüz ölçümlerini analiz eder. Bunu yalnızca yetişkinlere sunuyoruz. Dürüstlüğün için teşekkürler.',
   },
 
+  tabs: {
+    home: 'Bugün',
+    plan: 'Plan',
+    progress: 'İlerleme',
+    profile: 'Profil',
+  },
+
+  home: {
+    title: 'Bugün',
+    noScanLabel: 'HENÜZ TARAMA YOK',
+    noScanBody:
+      'Başlangıç referansını oluşturmak için ilk taramanı yap. Bundan sonraki her şey buna göre ölçülür.',
+    startScan: 'Taramaya başla',
+  },
+
   capture: {
     frontTitle: 'Önden',
     frontHint: 'Doğrudan lense bak. Nötr ifade, ağzın kapalı.',
@@ -71,6 +86,59 @@ export const tr: Copy = {
       tooBright: 'Parlama fazla — doğrudan ışıktan uzaklaş',
       blurry: 'Sabit dur',
     },
+  },
+
+  groups: {
+    eyes: 'Gözler',
+    proportions: 'Oranlar',
+    jawline: 'Çene hattı',
+    midface: 'Orta yüz',
+    skin: 'Cilt',
+    harmony: 'Uyum',
+  },
+
+  metrics: {
+    canthal_tilt: 'Göz açısı',
+    interpupillary_ratio: 'Göz bebeği aralığı',
+    eye_aspect_ratio: 'Göz açıklığı',
+    eye_spacing_ratio: 'Göz aralığı',
+    facial_thirds_balance: 'Yüzün üçte birleri',
+    facial_fifths_balance: 'Yüzün beşte birleri',
+    fwhr: 'Genişlik / yükseklik',
+    face_length_width_ratio: 'Uzunluk / genişlik',
+    gonial_angle: 'Çene açısı, önden',
+    jawline_definition: 'Çene hattı belirginliği',
+    chin_projection_ratio: 'Alt üçte bir',
+    mandible_width_ratio: 'Çene genişliği',
+    nasofrontal_angle: 'Kaş–burun açısı',
+    nose_width_ratio: 'Burun genişliği',
+    philtrum_length_ratio: 'Filtrum uzunluğu',
+    lip_fullness_ratio: 'Dudak dolgunluğu',
+    symmetry_index: 'Simetri',
+    gonial_angle_true: 'Çene açısı',
+    ramus_body_ratio: 'Çene oranları',
+    chin_projection_true: 'Çene çıkıntısı',
+    nasofrontal_angle_true: 'Kaş–burun açısı',
+    nasal_dorsum_index: 'Burun sırtı düzlüğü',
+    submental_cervical_angle: 'Çene altı açısı',
+    acne_density: 'Sivilce yoğunluğu',
+    redness_index: 'Kızarıklık',
+    dark_circle_index: 'Göz altı gölgesi',
+    pore_visibility: 'Gözenek görünürlüğü',
+    texture_uniformity: 'Doku düzgünlüğü',
+    oiliness_index: 'Yağlılık',
+    hyperpigmentation_index: 'Ton düzensizliği',
+  },
+
+  result: {
+    baselineTitle: 'Başlangıç kaydedildi',
+    baselineBody:
+      'Bunlar başlangıç ölçümlerin. Bundan sonraki her tarama başkasıyla değil, bunlarla karşılaştırılacak.',
+    sampleNotice:
+      'Örnek veri. Bunlar sentetik bir yüzün gerçek ölçümleri — seninkini ölçecek olan aynı kod tarafından hesaplandı.',
+    notComparable:
+      'Ölçülüyor ama ilerleme olarak izlenmiyor — kemik yapısı değişmez, aksini iddia etmeyeceğiz.',
+    buildRoutine: 'Rutinimi oluştur',
   },
 
   consent: {

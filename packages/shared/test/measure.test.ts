@@ -14,58 +14,16 @@ import {
   type FrontPoints,
   measureAll,
   PROFILE_MEASUREMENTS,
-  type ProfilePoints,
   symmetryIndex,
 } from '../src/measure';
+import {
+  sampleFrontPoints,
+  sampleMeasurements,
+  sampleProfilePoints,
+} from '../src/sample-face';
 
-/** A schematic, perfectly symmetric face. Midline at x = 0, y grows downward. */
-function symmetricFace(canthalRise = 4): FrontPoints {
-  return {
-    foreheadTop: point(0, -100),
-    glabella: point(0, -40),
-    nasion: point(0, -30),
-    subnasale: point(0, 20),
-    menton: point(0, 80),
-    leftLateralCanthus: point(40, -30 - canthalRise),
-    rightLateralCanthus: point(-40, -30 - canthalRise),
-    leftMedialCanthus: point(15, -30),
-    rightMedialCanthus: point(-15, -30),
-    leftPupil: point(27, -30),
-    rightPupil: point(-27, -30),
-    leftEyeTop: point(27, -38),
-    rightEyeTop: point(-27, -38),
-    leftEyeBottom: point(27, -22),
-    rightEyeBottom: point(-27, -22),
-    leftZygion: point(65, -20),
-    rightZygion: point(-65, -20),
-    leftGonion: point(55, 40),
-    rightGonion: point(-55, 40),
-    leftJawMid: point(40, 62),
-    rightJawMid: point(-40, 62),
-    leftAlare: point(12, 15),
-    rightAlare: point(-12, 15),
-    leftCheilion: point(22, 40),
-    rightCheilion: point(-22, 40),
-    labialeSuperius: point(0, 33),
-    labialeInferius: point(0, 47),
-    stomion: point(0, 40),
-  };
-}
-
-function profileFace(): ProfilePoints {
-  return {
-    glabella: point(10, -40),
-    nasion: point(8, -30),
-    rhinion: point(18, -10),
-    pronasale: point(32, 8),
-    subnasale: point(14, 20),
-    pogonion: point(16, 70),
-    menton: point(10, 80),
-    gonion: point(-45, 45),
-    condylion: point(-52, -20),
-    cervicalPoint: point(-20, 95),
-  };
-}
+const symmetricFace = sampleFrontPoints;
+const profileFace = sampleProfilePoints;
 
 function mapFace(face: FrontPoints, fn: (p: Point) => Point): FrontPoints {
   return Object.fromEntries(
@@ -189,6 +147,37 @@ describe('measureAll', () => {
     ] as const) {
       expect(values[key]).toBeGreaterThan(0);
       expect(values[key]).toBeLessThanOrEqual(1);
+    }
+  });
+});
+
+describe('sampleMeasurements', () => {
+  it('covers every front metric', () => {
+    const keys = sampleMeasurements().map((m) => m.key);
+    expect(keys.sort()).toEqual(Object.keys(FRONT_MEASUREMENTS).sort());
+  });
+
+  it('adds the profile metrics on request', () => {
+    const keys = sampleMeasurements({ withProfile: true }).map((m) => m.key);
+    const expected = [
+      ...Object.keys(FRONT_MEASUREMENTS),
+      ...Object.keys(PROFILE_MEASUREMENTS),
+    ].sort();
+    expect(keys.sort()).toEqual(expected);
+  });
+
+  it('is computed rather than written down', () => {
+    // Guards the reason this fixture exists: numbers typed into a mockup drift
+    // away from what the code produces, and these must not be able to.
+    const measured = measureAll(sampleFrontPoints());
+    for (const { key, value } of sampleMeasurements()) {
+      expect(value).toBe(measured[key]);
+    }
+  });
+
+  it('carries the catalogue unit for each metric', () => {
+    for (const { key, unit } of sampleMeasurements({ withProfile: true })) {
+      expect(unit).toBe(METRIC_META[key].unit);
     }
   });
 });

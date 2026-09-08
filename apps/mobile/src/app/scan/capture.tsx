@@ -60,6 +60,11 @@ export default function Capture() {
     router.push('/scan/analyzing');
   }
 
+  /** A build without a camera walks the rest of the flow on the sample face. */
+  function continueWithSample() {
+    router.push('/scan/analyzing?sample=1');
+  }
+
   // A simulator build links no detector and has no camera. Rather than a dead
   // screen, offer the rest of the flow so the interface can still be reviewed.
   if (!faceDetectionSupported) {
@@ -69,7 +74,7 @@ export default function Capture() {
           <Text variant="h1">{t('capture.simulatorTitle')}</Text>
           <Text tone="secondary">{t('capture.simulatorBody')}</Text>
         </View>
-        <Button label={t('capture.simulatorContinue')} onPress={submit} />
+        <Button label={t('capture.simulatorContinue')} onPress={continueWithSample} />
         <Button label={t('common.cancel')} variant="ghost" onPress={() => router.back()} />
       </Screen>
     );

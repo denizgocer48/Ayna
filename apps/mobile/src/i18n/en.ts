@@ -37,6 +37,21 @@ export const en = {
       'Ayna analyses facial measurements, which counts as biometric data. We only offer that to adults. Thanks for your honesty.',
   },
 
+  tabs: {
+    home: 'Home',
+    plan: 'Plan',
+    progress: 'Progress',
+    profile: 'Profile',
+  },
+
+  home: {
+    title: 'Today',
+    noScanLabel: 'NO SCAN YET',
+    noScanBody:
+      'Take your first scan to set a baseline. Everything after this is measured against it.',
+    startScan: 'Start a scan',
+  },
+
   capture: {
     frontTitle: 'Front',
     frontHint: 'Look straight into the lens. Neutral expression, mouth closed.',
@@ -71,6 +86,59 @@ export const en = {
       tooBright: 'Too much glare — move away from direct light',
       blurry: 'Hold still',
     },
+  },
+
+  groups: {
+    eyes: 'Eyes',
+    proportions: 'Proportions',
+    jawline: 'Jawline',
+    midface: 'Midface',
+    skin: 'Skin',
+    harmony: 'Harmony',
+  },
+
+  metrics: {
+    canthal_tilt: 'Eye tilt',
+    interpupillary_ratio: 'Pupil spacing',
+    eye_aspect_ratio: 'Eye openness',
+    eye_spacing_ratio: 'Eye spacing',
+    facial_thirds_balance: 'Facial thirds',
+    facial_fifths_balance: 'Facial fifths',
+    fwhr: 'Width to height',
+    face_length_width_ratio: 'Length to width',
+    gonial_angle: 'Jaw angle, from the front',
+    jawline_definition: 'Jawline definition',
+    chin_projection_ratio: 'Lower third',
+    mandible_width_ratio: 'Jaw width',
+    nasofrontal_angle: 'Brow to nose angle',
+    nose_width_ratio: 'Nose width',
+    philtrum_length_ratio: 'Philtrum length',
+    lip_fullness_ratio: 'Lip fullness',
+    symmetry_index: 'Symmetry',
+    gonial_angle_true: 'Jaw angle',
+    ramus_body_ratio: 'Jaw proportions',
+    chin_projection_true: 'Chin projection',
+    nasofrontal_angle_true: 'Brow to nose angle',
+    nasal_dorsum_index: 'Nose bridge straightness',
+    submental_cervical_angle: 'Under-chin angle',
+    acne_density: 'Blemishes',
+    redness_index: 'Redness',
+    dark_circle_index: 'Under-eye shadows',
+    pore_visibility: 'Pore visibility',
+    texture_uniformity: 'Texture evenness',
+    oiliness_index: 'Oiliness',
+    hyperpigmentation_index: 'Uneven tone',
+  },
+
+  result: {
+    baselineTitle: 'Baseline recorded',
+    baselineBody:
+      'These are your starting measurements. Every future scan is compared against them, not against anyone else.',
+    sampleNotice:
+      'Sample data. These are real measurements of a synthetic face, computed by the same code that will measure yours.',
+    notComparable:
+      'Measured, but not tracked as progress — bone structure does not change, and we will not pretend otherwise.',
+    buildRoutine: 'Build my routine',
   },
 
   consent: {
