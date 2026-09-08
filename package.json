@@ -1,0 +1,21 @@
+{
+  "name": "ayna",
+  "private": true,
+  "version": "0.1.0",
+  "workspaces": [
+    "apps/*",
+    "packages/*"
+  ],
+  "engines": {
+    "node": ">=22 <23"
+  },
+  "scripts": {
+    "mobile": "npm run start --workspace apps/mobile",
+    "mobile:ios": "npm run ios --workspace apps/mobile",
+    "mobile:android": "npm run android --workspace apps/mobile",
+    "typecheck": "npm run typecheck --workspaces --if-present",
+    "lint": "npm run lint --workspaces --if-present",
+    "test": "npm run test --workspaces --if-present",
+    "api": "cd services/api && uvicorn app.main:app --reload --port 8000"
+  }
+}

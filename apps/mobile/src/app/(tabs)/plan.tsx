@@ -1,0 +1,18 @@
+import { Card, Screen, Text } from '@/components/ui';
+
+/** TODO(faz-3): routine list with daily check-off, backed by `routine_items`. */
+export default function Plan() {
+  return (
+    <Screen scroll>
+      <Text variant="h1">Your plan</Text>
+      <Card>
+        <Text variant="label" tone="accent">
+          PLACEHOLDER
+        </Text>
+        <Text variant="bodySm" tone="muted">
+          Routine and daily check-off land in Faz 3.
+        </Text>
+      </Card>
+    </Screen>
+  );
+}
