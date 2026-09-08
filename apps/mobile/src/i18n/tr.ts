@@ -36,6 +36,39 @@ export const tr: Copy = {
       'Ayna biyometrik veri sayılan yüz ölçümlerini analiz eder. Bunu yalnızca yetişkinlere sunuyoruz. Dürüstlüğün için teşekkürler.',
   },
 
+  capture: {
+    frontTitle: 'Önden',
+    frontHint: 'Doğrudan lense bak. Nötr ifade, ağzın kapalı.',
+    sideTitle: 'Yandan',
+    sideHint: 'Tam 90 derece dön. Çenen düz, omuzların karşıya baksın.',
+    sideOptional:
+      'İsteğe bağlı, ama çene açını tahmin etmek yerine doğrudan ölçmemizi sağlıyor.',
+    ready: 'Sabit dur',
+    shutter: 'Çek',
+    skipSide: 'Yan fotoğrafı atla',
+    analysing: 'Ölçülüyor',
+    permissionTitle: 'Kamera izni',
+    permissionBody:
+      'Ayna yüzünü ölçmek için kameraya ihtiyaç duyuyor. Fotoğraf bu cihazda işlenir ve hiçbir yere yüklenmez.',
+    permissionGrant: 'Kameraya izin ver',
+    permissionBlockedBody:
+      'Kamera erişimi kapalı. Tarama yapabilmek için Ayarlar\'dan açman gerekiyor.',
+    unavailable: 'Bu cihazda kullanılabilir kamera yok.',
+    hints: {
+      noFace: 'Yüzünü ovalin içine al',
+      multipleFaces: 'Karede yalnızca sen ol',
+      faceTooSmall: 'Biraz yaklaş',
+      faceTooClose: 'Biraz uzaklaş',
+      offCentre: 'Yüzünü ovalin ortasına al',
+      headTurned: 'Doğrudan kameraya bak',
+      headTilted: 'Başını düz tut',
+      eyesClosed: 'Gözlerini aç',
+      tooDark: 'Daha aydınlık ve dengeli bir ışık bul',
+      tooBright: 'Parlama fazla — doğrudan ışıktan uzaklaş',
+      blurry: 'Sabit dur',
+    },
+  },
+
   consent: {
     title: 'Fotoğrafın, verin',
     whatWeDoLabel: 'Ne yapıyoruz',

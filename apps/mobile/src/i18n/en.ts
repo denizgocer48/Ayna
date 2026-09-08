@@ -37,6 +37,38 @@ export const en = {
       'Ayna analyses facial measurements, which counts as biometric data. We only offer that to adults. Thanks for your honesty.',
   },
 
+  capture: {
+    frontTitle: 'Front',
+    frontHint: 'Look straight into the lens. Neutral expression, mouth closed.',
+    sideTitle: 'Side',
+    sideHint: 'Turn a full 90 degrees. Chin level, shoulders square.',
+    sideOptional: 'Optional, but it measures your jaw angle directly instead of estimating it.',
+    ready: 'Hold still',
+    shutter: 'Capture',
+    skipSide: 'Skip the side photo',
+    analysing: 'Measuring',
+    permissionTitle: 'Camera access',
+    permissionBody:
+      'Ayna needs the camera to measure your face. The photo is processed on this device and never uploaded.',
+    permissionGrant: 'Allow camera',
+    permissionBlockedBody:
+      'Camera access is turned off. Enable it in Settings to take a scan.',
+    unavailable: 'No camera available on this device.',
+    hints: {
+      noFace: 'Center your face in the oval',
+      multipleFaces: 'Only you in the frame, please',
+      faceTooSmall: 'Move closer',
+      faceTooClose: 'Move back a little',
+      offCentre: 'Center your face in the oval',
+      headTurned: 'Face the camera straight on',
+      headTilted: 'Level your head',
+      eyesClosed: 'Open your eyes',
+      tooDark: 'Find brighter, more even light',
+      tooBright: 'Too much glare — move away from direct light',
+      blurry: 'Hold still',
+    },
+  },
+
   consent: {
     title: 'Your photo, your data',
     whatWeDoLabel: 'What we do',

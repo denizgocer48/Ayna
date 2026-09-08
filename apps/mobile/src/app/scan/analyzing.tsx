@@ -3,12 +3,22 @@ import { ActivityIndicator, View } from 'react-native';
 
 import { Screen, Text } from '@/components/ui';
 import { useTheme } from '@/hooks/use-theme';
+import { t } from '@/i18n';
 import { spacing } from '@/theme';
 
 /**
- * TODO(faz-2): poll `GET /scans/{id}` until status leaves `processing`.
- * Analysis is queued server-side, so this screen owns the wait — never block
- * the upload request on inference.
+ * The pause between capture and result.
+ *
+ * Measurement already happened on the device — this screen is waiting on the
+ * network round trip that stores the scan and returns progress, not on
+ * analysis. There is nothing to poll.
+ *
+ * Deliberately no fake progress bar and no scanning animation. If the wait is
+ * short the animation is a lie about the work; if it is long the honest thing
+ * is to say the network is slow.
+ *
+ * TODO(faz-1): submit the measurements with `POST /scans`, then replace to the
+ * returned scan id.
  */
 export default function Analyzing() {
   const { colors } = useTheme();
@@ -18,10 +28,7 @@ export default function Analyzing() {
       <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', gap: spacing.lg }}>
         <ActivityIndicator size="large" color={colors.accent} />
         <Text variant="h3" center>
-          Measuring
-        </Text>
-        <Text variant="bodySm" tone="muted" center>
-          Landmark detection, then 17 geometric measurements.
+          {t('capture.analysing')}
         </Text>
         <Text
           variant="caption"
