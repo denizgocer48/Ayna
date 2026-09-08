@@ -33,6 +33,7 @@ select = ["E", "F", "I", "N", "UP", "B", "SIM"]
 # Wire-format mirrors of packages/shared: field names must match the TypeScript
 # contract exactly, so camelCase here is deliberate.
 "app/schemas.py" = ["N815"]
+"app/routers/*.py" = ["N815"]
 
 [tool.mypy]
 python_version = "3.12"

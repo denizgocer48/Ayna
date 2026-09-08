@@ -36,6 +36,6 @@ jobs:
           python-version: '3.12'
       - run: pip install ruff pytest pydantic pydantic-settings
       - run: ruff check .
-      # Only the contract test runs here: it needs no heavy CV dependencies and
-      # it is the check that actually catches cross-language drift.
-      - run: pytest tests/test_contract.py -q
+      # The suite here needs no heavy CV dependencies: it covers the
+      # cross-language metric contract and the reachable-score projection.
+      - run: pytest -q

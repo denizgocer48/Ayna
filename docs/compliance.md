@@ -44,7 +44,8 @@ Apps that rate physical attractiveness get rejected under Guideline 1.1.1
 marketed as a **grooming and skincare progress tracker**:
 
 - The score is framed as a personal baseline to improve against, never as a
-  ranking against other people.
+  ranking against other people. The headline is two numbers — today and
+  reachable — so the screen reads as a starting point, not a verdict.
 - No leaderboards, no comparisons between users, no "rate my face" social loop.
 - Screenshots and the store listing show the routine and progress views, not a
   number over a face.
