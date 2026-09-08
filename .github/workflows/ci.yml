@@ -11,7 +11,7 @@ concurrency:
 
 jobs:
   mobile:
-    name: Mobile (typecheck + lint)
+    name: Mobile (typecheck, lint, tests)
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
@@ -20,8 +20,11 @@ jobs:
           node-version-file: .nvmrc
           cache: npm
       - run: npm ci
-      - run: npm run typecheck --workspace @ayna/mobile
+      - run: npm run typecheck
       - run: npm run lint --workspace @ayna/mobile
+      # Geometry, measurements and the detector resolver all run on the device,
+      # so they are tested here rather than in the Python job.
+      - run: npm test
 
   api:
     name: API (lint + tests)
