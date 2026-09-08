@@ -5,6 +5,7 @@ Supabase for identity/data/storage.
 
 ## Read first
 
+- `docs/handoff.md` — current status, setup traps, what is real vs placeholder
 - `docs/product.md` — the four decisions the whole build rests on
 - `docs/architecture.md` — how a scan flows through the system
 - `docs/compliance.md` — the constraints that are legal requirements

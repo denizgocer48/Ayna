@@ -43,6 +43,11 @@ npm run lint
 cd services/api && ruff check . && pytest
 ```
 
+## Picking up the project
+
+Start with `docs/handoff.md` — current status, environment traps, what is real
+versus placeholder, and the next task in order.
+
 ## Before changing anything about photos, consent or scoring
 
 Read `docs/compliance.md`. Several constraints in the schema and the onboarding
