@@ -93,7 +93,9 @@ fills it in.
 | Reachable projection | `services/api/app/analysis/scoring.py` | Implemented and unit-tested. `fixed` metrics are excluded by construction. |
 | Contract enforcement | `services/api/tests/test_contract.py` | Compares the TS and Python catalogues key by key, metadata by metadata, group by group. |
 | Capture quality gate | `apps/mobile/src/features/scan/quality.ts` | Pure function over landmark signals. Camera adapter not yet written. |
-| Database schema | `supabase/migrations/` | Two migrations. RLS on every user-owned table. Not yet applied to any project. |
+| Database schema | `supabase/migrations/` | Three migrations, applied and verified against a local stack. |
+| RLS behaviour | `supabase/tests/rls.sql` | Nine assertions covering consent, quota, withdrawal, cross-user isolation and the append-only consent log. Caught a real ordering bug. |
+| Facial measurements | `services/api/app/analysis/metrics.py` | All 23 geometric metrics implemented and tested, including scale, translation and rotation invariance. |
 | Theming | `apps/mobile/src/theme/` | Dark-first tokens. Never hardcode a colour; the lint does not catch it but review will. |
 | Navigation + consent flow | `apps/mobile/src/app/` | Age gate blocks under-18s, consent checkbox gates the Continue button. |
 
@@ -122,11 +124,12 @@ fills it in.
 - **No Supabase project exists.** The migrations have never been applied. The
   first person to create the project should run them in order and then fill in
   `SUPABASE_PROJECT_REF`.
-- **`metric_norms` is empty.** Every metric needs a reference distribution row
-  per sex and age band before `to_percentile()` can return anything. Without
-  norms there are no percentiles, and without percentiles there is no score.
-  This is the largest single unknown in Faz 2 — budget research time for it,
-  not just implementation time.
+- **`metric_norms` is empty, and it is worse than that.** Research found that
+  about a third of the metrics have no usable published reference distribution,
+  and that no study validates MediaPipe's output against anthropometric ground
+  truth. Read `docs/norms.md` before building anything that prints a percentile.
+  The measurements are reproducible and tested; the comparison to a population
+  is what is unsupported.
 - **Android is unproven.** First build may surface native issues the iOS build
   did not.
 - **No E2E tests.** Maestro is named in the architecture doc but not set up.

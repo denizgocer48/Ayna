@@ -41,7 +41,14 @@ npx eas build --profile development --platform ios
 npm run typecheck             # every workspace
 npm run lint
 cd services/api && ruff check . && pytest
+
+# Database and RLS, against a local stack
+supabase start
+docker exec -i supabase_db_ayna psql -U postgres -d postgres < supabase/tests/rls.sql
 ```
+
+The RLS script asserts the consent and quota rules as behaviour. Silence means
+every assertion passed; any failure raises and aborts.
 
 ## Picking up the project
 

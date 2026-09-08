@@ -22,6 +22,7 @@ what could not be verified rather than smoothing over it.
 | [market.md](market.md) | What the incumbents got wrong, what App Store guidelines govern this category, and the product rules that follow. |
 | [skin-analysis.md](skin-analysis.md) | Buy versus build for skin metrics, vendor by vendor. Why skin is deferred out of V1, and what that costs, measured. |
 | [pricing.md](pricing.md) | What competitors actually charge, verified from live listings. Why the billing period differs between Turkey and English markets. |
+| [norms.md](norms.md) | Whether a percentile can be grounded at all. Which metrics have published reference distributions, which have none, and the unvalidated link between MediaPipe output and the anthropometric literature. |
 | [store-listing.md](store-listing.md) | App Store and Play metadata, ready to paste, with character and byte counts. Category choice and its reasoning. |
 
 ## How to read these

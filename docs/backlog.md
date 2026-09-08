@@ -37,6 +37,29 @@ Options when this is picked up:
 
 Do not resolve this by widening the caps in `REACHABLE_GAIN`.
 
+### Grounding the percentile claim
+
+**Raised 2026-09-08. Blocks any UI that prints a percentile.** See `norms.md`.
+
+About a third of the metrics have no usable published reference distribution,
+and no study validates MediaPipe's landmark output against caliper or
+cephalometric ground truth. The measurements are sound and reproducible; the
+comparison to a population is what is unsupported.
+
+Three things need deciding, and they are product decisions rather than
+engineering ones:
+
+1. Which metrics keep a percentile, which get reframed as "close to the
+   classical canon", and which get dropped or moved to the side capture.
+2. Whether to run a calibration study — a few hundred consenting users measured
+   by both our pipeline and manual landmark placement — to anchor our output to
+   the literature.
+3. Whether progress-against-your-own-baseline, which needs no reference
+   population at all, becomes the primary claim instead.
+
+Option 3 is worth serious weight: it is free, it is already true, and it sidesteps
+the entire problem.
+
 ### Skin analysis
 
 **Deferred out of V1 2026-09-08.** Unblocked when any of these becomes true:
