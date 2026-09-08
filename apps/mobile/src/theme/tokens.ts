@@ -82,12 +82,19 @@ export const colors = {
   },
 } as const;
 
-/** Score bands drive gauge colour, badge copy and recommendation tone. */
-export const scoreBands = {
-  low: { max: 39, color: palette.red500 },
-  mid: { max: 64, color: palette.amber500 },
-  high: { max: 84, color: palette.green500 },
-  elite: { max: 100, color: palette.gold400 },
+/**
+ * Trend colours for progress against the user's own baseline.
+ *
+ * There is no score band, because there is no score — see docs/norms.md. What
+ * the UI colours is direction of change, and `notComparable` is deliberately
+ * muted: a fixed measurement is information, not a verdict, and must not read
+ * as a failure.
+ */
+export const trendColors = {
+  improved: palette.green500,
+  held: palette.slate400,
+  declined: palette.amber500,
+  notComparable: palette.ink400,
 } as const;
 
 export const spacing = {

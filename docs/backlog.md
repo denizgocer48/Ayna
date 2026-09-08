@@ -37,28 +37,31 @@ Options when this is picked up:
 
 Do not resolve this by widening the caps in `REACHABLE_GAIN`.
 
-### Grounding the percentile claim
+### Reintroducing percentiles
 
-**Raised 2026-09-08. Blocks any UI that prints a percentile.** See `norms.md`.
+**Resolved 2026-09-08 by removing them.** V1 reports measurements and progress
+against the user's own baseline; `metric_norms` and `scores` were dropped.
 
-About a third of the metrics have no usable published reference distribution,
-and no study validates MediaPipe's landmark output against caliper or
-cephalometric ground truth. The measurements are sound and reproducible; the
-comparison to a population is what is unsupported.
+Revisit only with data that grounds the claim: published norms for the metrics
+that lack them, and a calibration study anchoring our landmark output to the
+anthropometric literature. `docs/norms.md` keeps the full path. Do not
+reintroduce a percentile to make a screenshot more shareable.
 
-Three things need deciding, and they are product decisions rather than
-engineering ones:
+### Sharing a before-and-after
 
-1. Which metrics keep a percentile, which get reframed as "close to the
-   classical canon", and which get dropped or moved to the side capture.
-2. Whether to run a calibration study — a few hundred consenting users measured
-   by both our pipeline and manual landmark placement — to anchor our output to
-   the literature.
-3. Whether progress-against-your-own-baseline, which needs no reference
-   population at all, becomes the primary claim instead.
+Not built, and worth a deliberate decision rather than drift. Sharing a *score*
+is ruled out — the competitors' viral loop is built on sharing a rank, which is
+the framing Guideline 1.2 targets and which this product does not produce.
+Sharing your own before-and-after is a different thing and may be defensible.
+Decide it on its own terms, with the compliance section open.
 
-Option 3 is worth serious weight: it is free, it is already true, and it sidesteps
-the entire problem.
+### Noise floors are guesses
+
+`NOISE_FLOOR` decides whether a change counts as progress or as noise, and the
+current values are conservative guesses rather than measurements. The
+calibration study in `docs/norms.md` is what would ground them. Until then, they
+are deliberately set high: calling a real change "held" disappoints, calling
+noise "improved" destroys trust.
 
 ### Skin analysis
 

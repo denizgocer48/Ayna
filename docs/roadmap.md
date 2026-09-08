@@ -26,21 +26,25 @@ schema with RLS, CI.
 - Profile: consent withdrawal and full data deletion. Legal requirements — they
   ship in the first release.
 
-## Faz 2 — analysis (4 weeks)
+## Faz 2 — measurement and routine (5 weeks)
 
 - MediaPipe Face Landmarker in the worker.
 - 23 geometric metrics: 17 front, 6 side.
-- Seed `metric_norms` for both sexes across age bands, implement normalisation.
-- Score screen: Skia gauge for today-versus-reachable, sub-score radar, metric
-  breakdown gated on entitlement.
-- Recommendations: rule selection over the metric table, then Claude for the
-  copy. The model sees metrics, never the image.
+- Measurement screen: baseline on the first scan, change against baseline after.
+  No gauge, no score — see `docs/product.md` section 1.
+- Progress timeline and the before/after comparison.
+- Recommendations: rule selection over the measurement table, then Claude for the
+  copy. The model sees measurements and what moved, never the image.
+- **Routine generation and daily check-off.** Moved here from Faz 3: with
+  progress as the primary claim, the routine is what produces the change being
+  measured, so shipping one without the other delivers half a product.
 
-## Faz 3 — habit loop (3 weeks)
+## Faz 3 — retention (2 weeks)
 
-- Routine generation from a scan, ordered by `expected_impact`.
-- Daily check-off, streaks, notifications.
-- Progress timeline and before/after comparison.
+- Streaks and notifications around the routine.
+- Weekly scan reminders timed to the noise floor: prompting a rescan sooner than
+  a measurable change is possible produces a "nothing moved" screen and teaches
+  the user the app does not work.
 
 ## Faz 4 — monetisation (2 weeks)
 

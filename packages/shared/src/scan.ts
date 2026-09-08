@@ -1,6 +1,6 @@
 import { z } from 'zod';
 import { captureQualitySchema, poseSchema } from './capture';
-import { metricGroupSchema, metricResultSchema } from './metrics';
+import { measurementSchema, metricChangeSchema, metricGroupSchema } from './metrics';
 
 export const scanStatusSchema = z.enum([
   'pending',
@@ -11,19 +11,6 @@ export const scanStatusSchema = z.enum([
 ]);
 export type ScanStatus = z.infer<typeof scanStatusSchema>;
 
-export const scoreBandSchema = z.enum(['low', 'mid', 'high', 'elite']);
-export type ScoreBand = z.infer<typeof scoreBandSchema>;
-
-export const subScoreSchema = z.object({
-  group: metricGroupSchema,
-  score: z.number().min(0).max(100),
-  reachable: z.number().min(0).max(100),
-  band: scoreBandSchema,
-  /** False when the scan lacked the pose this group needs (side capture skipped). */
-  complete: z.boolean(),
-});
-export type SubScore = z.infer<typeof subScoreSchema>;
-
 export const recommendationSchema = z.object({
   id: z.string(),
   /** The metrics that produced this recommendation — never unattributed advice. */
@@ -32,10 +19,8 @@ export const recommendationSchema = z.object({
   body: z.string(),
   category: z.enum(['skincare', 'grooming', 'hair', 'posture', 'fitness', 'sleep', 'habits']),
   effort: z.enum(['daily', 'weekly', 'one_off']),
-  /** Weeks before a visible change is realistic. Sets honest expectations. */
+  /** Weeks before a measurable change is realistic. Sets honest expectations. */
   horizonWeeks: z.number().int().positive(),
-  /** Share of the score gap this item is expected to close, 0-1. */
-  expectedImpact: z.number().min(0).max(1),
 });
 export type Recommendation = z.infer<typeof recommendationSchema>;
 
@@ -47,29 +32,51 @@ export const scanImageSchema = z.object({
 });
 export type ScanImage = z.infer<typeof scanImageSchema>;
 
+/**
+ * What a group of metrics did between two scans.
+ *
+ * There is no group score. A single number over a group would need weights, and
+ * weights over measurements in different units need a reference distribution to
+ * normalise against — the thing `docs/norms.md` says we do not have. Counting
+ * what moved is honest and needs nothing.
+ */
+export const groupProgressSchema = z.object({
+  group: metricGroupSchema,
+  improved: z.number().int().nonnegative(),
+  held: z.number().int().nonnegative(),
+  declined: z.number().int().nonnegative(),
+  /** False when the scan lacked the pose this group needs. */
+  complete: z.boolean(),
+});
+export type GroupProgress = z.infer<typeof groupProgressSchema>;
+
+export const progressSchema = z.object({
+  /** The scan this one is measured against — always the user's first. */
+  baselineScanId: z.string().uuid(),
+  baselineCapturedAt: z.string().datetime(),
+  daysSinceBaseline: z.number().int().nonnegative(),
+  changes: z.array(metricChangeSchema),
+  byGroup: z.array(groupProgressSchema),
+});
+export type Progress = z.infer<typeof progressSchema>;
+
 export const scanResultSchema = z.object({
   scanId: z.string().uuid(),
   status: scanStatusSchema,
   capturedAt: z.string().datetime(),
   images: z.array(scanImageSchema).min(1).max(2),
 
-  /** Today's score. */
-  overall: z.number().min(0).max(100),
-  band: scoreBandSchema,
-  /**
-   * Where the score lands if every non-fixed metric reaches its realistic
-   * target. Always >= overall. The gap between the two is the product's core
-   * promise, and it must never be inflated: fixed metrics are held constant.
-   */
-  reachable: z.number().min(0).max(100),
+  /** Raw measurements. No score, no percentile, no ranking against anyone. */
+  measurements: z.array(measurementSchema),
 
-  subScores: z.array(subScoreSchema),
-  metrics: z.array(metricResultSchema),
+  /** Absent on the first scan — there is nothing yet to measure against. */
+  progress: progressSchema.nullable(),
+
   recommendations: z.array(recommendationSchema),
 
-  /** True when the full metric breakdown is gated behind the paywall. */
+  /** True when the detail is gated behind the paywall. */
   locked: z.boolean(),
-  /** Model + ruleset version. Required so old scans stay explainable. */
+  /** Measurement engine version. Required so an old scan stays comparable. */
   engineVersion: z.string(),
 });
 export type ScanResult = z.infer<typeof scanResultSchema>;

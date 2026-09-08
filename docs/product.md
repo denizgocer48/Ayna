@@ -4,26 +4,40 @@ Decided 2026-09-08. These four choices are load-bearing — several of them are
 encoded in the schema and the scoring layer, so changing one is a migration, not
 a copy edit.
 
-## 1. Two numbers, never one
+## 1. Progress, not a score
 
-The result screen shows **today's score and the reachable projection**.
+**Revised 2026-09-08.** The design originally showed two numbers — today's score
+and a reachable projection. That framing is gone, replaced by change measured
+against the user's own first scan.
 
-A `68 → 79` gap is what the design produces *with skin analysis included*. Skin
-is deferred out of V1 (`docs/skin-analysis.md`), and measured against the real
-scoring code the V1 gap is closer to three points than eleven — every
-`responsive` metric was a skin metric. V1 therefore sells progress tracking
-rather than transformation, and the copy must not overstate it.
+Two independent lines of evidence forced it. `docs/norms.md` found that roughly a
+third of the metrics have no published reference distribution, and that nothing
+validates our landmark source against the anthropometric literature — so a
+percentile could not be grounded, and printing one would be the unsupported
+feature App Store Guideline 1.1.6 rejects. Separately, a competitive review
+concluded that comparing a user to their own history rather than to other people
+is both the stronger retention mechanic and the safer position under Guideline
+1.2. Both roads led to the same product.
 
-Today's score alone reads as a verdict on the person. Today-versus-reachable
-reads as a starting point with a route out, which is the product we are actually
-building — and it is what keeps the app out of the "attractiveness rating"
-category in App Store review.
+What the user sees:
 
-The projection is computed by holding every `fixed` metric constant and moving
-`slow` and `responsive` metrics toward a capped target
-(`services/api/app/analysis/scoring.py`). Bone geometry is measured but never
-projected. The caps exist so the gap cannot be inflated: a user who works for
-eight weeks and does not reach the promised number never comes back.
+- **First scan:** their measurements, recorded as a baseline. No score, no rank.
+- **Later scans:** what moved, by how much, in which direction.
+
+Three rules keep it honest, and all three are enforced in
+`services/api/app/analysis/progress.py` rather than left to the interface:
+
+1. **A `fixed` metric can never show progress.** Bone geometry does not move, so
+   any difference between two scans is measurement noise. It is reported as
+   `not_comparable` and shown in a muted colour — information, not a verdict.
+2. **A movement inside the noise floor is `held`, not progress.** Dressing up
+   noise as a win is the same dishonesty as an unreliable score.
+3. **There is no group score.** A single number over a group needs weights, and
+   weighting measurements in different units needs the reference distribution we
+   do not have. Groups report counts: how many improved, held, declined.
+
+What this costs: the headline number that makes a screenshot shareable. What it
+buys: a claim that survives contact with a user who checks.
 
 ## 2. Mixed audience, 18-35
 
@@ -52,19 +66,18 @@ can show the right button.
 
 ## 4. V1 scope
 
-Front geometry **and** skin analysis **and** side profile **and** the routine
-loop. This is a wide V1 — roughly 13-15 weeks rather than the 8-10 that front
-geometry alone would need. The scope was chosen deliberately; see
-`docs/roadmap.md` for the phasing.
+Front geometry, side profile, and the routine loop. Skin analysis is deferred —
+see `docs/skin-analysis.md`.
 
-The pieces are not independent:
+**The routine moved from Faz 3 into Faz 2**, alongside the measurement screen.
+With progress as the primary claim, the routine is not a follow-on feature: it
+is the thing that produces the change progress measures. Shipping measurement
+without it would deliver an app that tells you nothing moved, and offers nothing
+to move it.
 
-- Skin carries nearly all of the reachable gain. Without it the projection is
-  small and the paywall has little to sell.
-- The side profile turns estimated jaw metrics into measured ones. Without it
-  the jawline sub-score is marked `complete: false`.
-- The routine loop is the entire retention story. Without it the app is a
-  single-use toy regardless of how good the analysis is.
+The side profile turns estimated jaw metrics into measured ones. Without it the
+jawline group reports `complete: false` rather than being scored from a partial
+set.
 
 ## 5. Positioning
 
@@ -154,3 +167,37 @@ What this costs, concretely:
 - **An EU legal review becomes a first-release dependency**, not a second-phase
   one, because an English listing means EU availability and the AI Act biometric
   provisions land in December 2026.
+
+## 8. What we refuse to copy
+
+A review of Hiface, LooxUP and LooksMax AI in September 2026 found the same
+pattern in all three. Some of it is worth learning from; four things are not.
+
+**No ranking against other people.** Hiface leads with "Top 15% of men". LooxUP
+advertises showing "how you compare to other men". This is the framing App Store
+Guideline 1.2 permits removal without notice for, and it is the opposite of the
+claim we can actually support.
+
+**No score-sharing.** Hiface puts Instagram, X, TikTok, Snapchat and WhatsApp
+buttons directly under the score. That viral loop is built on sharing a rank,
+which is the thing we do not produce. Sharing a personal before-and-after is a
+different question and can be revisited; sharing a number is not.
+
+**No masculinity or femininity score.** LooxUP reports a "Masculinity Index";
+Hiface shows "Masculinity 90". Producing a gendered aesthetic verdict from a face
+sits badly with Guideline 1.2 and edges toward the demographic inference the EU
+AI Act prohibits.
+
+**No mewing, and no unevidenced routine items.** It appears throughout the
+category. A 2022 systematic review in the American Journal of Orthodontics found
+no high-quality evidence it treats skeletal malocclusion in adults; adult facial
+bones are set, and posture does not remodel bone. In November 2024 the UK General
+Dental Council erased Mike Mew from the dental register over misleading public
+claims. We serve adults only — precisely the population where it demonstrably
+does not work. It is on the blocklist in
+`services/api/app/analysis/recommendations.py`, and every routine item must be
+evidence-backed on the same standard.
+
+What is worth learning: the daily routine with a streak is the retention engine,
+and progress against your own history is the strongest and safest framing. Both
+are now central rather than peripheral.

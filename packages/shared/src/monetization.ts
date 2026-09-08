@@ -30,10 +30,11 @@ export type ScanQuota = z.infer<typeof scanQuotaSchema>;
 
 /** What a free user sees on the result screen. Everything else is locked. */
 export const FREE_TIER_VISIBLE = {
-  overall: true,
-  reachable: true,
-  subScores: true,
-  metricBreakdown: false,
+  /** The first scan always shows its own measurements — that is the baseline. */
+  measurements: true,
+  groupSummary: true,
+  fullMetricDetail: false,
   recommendations: 'first_only' as const,
+  /** Progress is the product. It is also what a second scan requires. */
   progressHistory: false,
 };

@@ -14,6 +14,7 @@ Unit = Literal["deg", "ratio", "index"]
 Provenance = Literal["geometry", "segmentation"]
 Mutability = Literal["fixed", "slow", "responsive"]
 Pose = Literal["front", "side"]
+Direction = Literal["higher_better", "lower_better", "neutral"]
 
 
 class MetricMeta(TypedDict):
@@ -21,47 +22,64 @@ class MetricMeta(TypedDict):
     provenance: Provenance
     mutability: Mutability
     pose: Literal["front", "side", "either"]
+    direction: Direction
 
 
 # Order matters: the contract test compares this against the TypeScript list
 # position by position. Kept as a table so a new metric is one readable row.
-_METRIC_ROWS: tuple[tuple[str, Unit, Provenance, Mutability, str], ...] = (
-    # key                        unit     provenance      mutability    pose
-    ("canthal_tilt",             "deg",   "geometry",     "fixed",      "front"),
-    ("interpupillary_ratio",     "ratio", "geometry",     "fixed",      "front"),
-    ("eye_aspect_ratio",         "ratio", "geometry",     "slow",       "front"),
-    ("eye_spacing_ratio",        "ratio", "geometry",     "fixed",      "front"),
-    ("facial_thirds_balance",    "index", "geometry",     "fixed",      "front"),
-    ("facial_fifths_balance",    "index", "geometry",     "fixed",      "front"),
-    ("fwhr",                     "ratio", "geometry",     "fixed",      "front"),
-    ("face_length_width_ratio",  "ratio", "geometry",     "fixed",      "front"),
-    ("gonial_angle",             "deg",   "geometry",     "fixed",      "front"),
-    ("jawline_definition",       "index", "geometry",     "slow",       "front"),
-    ("chin_projection_ratio",    "ratio", "geometry",     "fixed",      "front"),
-    ("mandible_width_ratio",     "ratio", "geometry",     "fixed",      "front"),
-    ("nasofrontal_angle",        "deg",   "geometry",     "fixed",      "front"),
-    ("nose_width_ratio",         "ratio", "geometry",     "fixed",      "front"),
-    ("philtrum_length_ratio",    "ratio", "geometry",     "fixed",      "front"),
-    ("lip_fullness_ratio",       "ratio", "geometry",     "slow",       "front"),
-    ("symmetry_index",           "index", "geometry",     "fixed",      "front"),
-    ("gonial_angle_true",        "deg",   "geometry",     "fixed",      "side"),
-    ("ramus_body_ratio",         "ratio", "geometry",     "fixed",      "side"),
-    ("chin_projection_true",     "ratio", "geometry",     "fixed",      "side"),
-    ("nasofrontal_angle_true",   "deg",   "geometry",     "fixed",      "side"),
-    ("nasal_dorsum_index",       "index", "geometry",     "fixed",      "side"),
-    ("submental_cervical_angle", "deg",   "geometry",     "slow",       "side"),
-    ("acne_density",             "index", "segmentation", "responsive", "front"),
-    ("redness_index",            "index", "segmentation", "responsive", "front"),
-    ("dark_circle_index",        "index", "segmentation", "responsive", "front"),
-    ("pore_visibility",          "index", "segmentation", "slow",       "front"),
-    ("texture_uniformity",       "index", "segmentation", "slow",       "front"),
-    ("oiliness_index",           "index", "segmentation", "responsive", "front"),
-    ("hyperpigmentation_index",  "index", "segmentation", "slow",       "front"),
+_METRIC_ROWS: tuple[tuple[str, Unit, Provenance, Mutability, str, Direction], ...] = (
+    # key                        unit     provenance      mutability    pose      direction
+    ("canthal_tilt",             "deg",   "geometry",     "fixed",      "front", "neutral"),
+    ("interpupillary_ratio",     "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("eye_aspect_ratio",         "ratio", "geometry",     "slow",       "front", "higher_better"),
+    ("eye_spacing_ratio",        "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("facial_thirds_balance",    "index", "geometry",     "fixed",      "front", "higher_better"),
+    ("facial_fifths_balance",    "index", "geometry",     "fixed",      "front", "higher_better"),
+    ("fwhr",                     "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("face_length_width_ratio",  "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("gonial_angle",             "deg",   "geometry",     "fixed",      "front", "neutral"),
+    ("jawline_definition",       "index", "geometry",     "slow",       "front", "higher_better"),
+    ("chin_projection_ratio",    "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("mandible_width_ratio",     "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("nasofrontal_angle",        "deg",   "geometry",     "fixed",      "front", "neutral"),
+    ("nose_width_ratio",         "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("philtrum_length_ratio",    "ratio", "geometry",     "fixed",      "front", "neutral"),
+    ("lip_fullness_ratio",       "ratio", "geometry",     "slow",       "front", "neutral"),
+    ("symmetry_index",           "index", "geometry",     "fixed",      "front", "higher_better"),
+    ("gonial_angle_true",        "deg",   "geometry",     "fixed",      "side", "neutral"),
+    ("ramus_body_ratio",         "ratio", "geometry",     "fixed",      "side", "neutral"),
+    ("chin_projection_true",     "ratio", "geometry",     "fixed",      "side", "neutral"),
+    ("nasofrontal_angle_true",   "deg",   "geometry",     "fixed",      "side", "neutral"),
+    ("nasal_dorsum_index",       "index", "geometry",     "fixed",      "side", "neutral"),
+    ("submental_cervical_angle", "deg",   "geometry",     "slow",       "side", "lower_better"),
+    ("acne_density",             "index", "segmentation", "responsive", "front", "lower_better"),
+    ("redness_index",            "index", "segmentation", "responsive", "front", "lower_better"),
+    ("dark_circle_index",        "index", "segmentation", "responsive", "front", "lower_better"),
+    ("pore_visibility",          "index", "segmentation", "slow",       "front", "lower_better"),
+    ("texture_uniformity",       "index", "segmentation", "slow",       "front", "higher_better"),
+    ("oiliness_index",           "index", "segmentation", "responsive", "front", "lower_better"),
+    ("hyperpigmentation_index",  "index", "segmentation", "slow",       "front", "lower_better"),
 )
 
 METRIC_META: dict[str, MetricMeta] = {
-    key: MetricMeta(unit=unit, provenance=provenance, mutability=mutability, pose=pose)  # type: ignore[typeddict-item]
-    for key, unit, provenance, mutability, pose in _METRIC_ROWS
+    key: MetricMeta(  # type: ignore[typeddict-item]
+        unit=unit,
+        provenance=provenance,
+        mutability=mutability,
+        pose=pose,
+        direction=direction,
+    )
+    for key, unit, provenance, mutability, pose, direction in _METRIC_ROWS
+}
+
+# Provisional noise floors as a fraction of the baseline value. Below this a
+# change is indistinguishable from capture-to-capture variation and must be
+# reported as "held". These are conservative guesses, not measurements — the
+# calibration study in docs/norms.md is what would ground them.
+NOISE_FLOOR: dict[str, float] = {
+    "fixed": float("inf"),
+    "slow": 0.04,
+    "responsive": 0.03,
 }
 
 METRIC_KEYS: tuple[str, ...] = tuple(METRIC_META)
@@ -117,11 +135,11 @@ class ScanStatus(StrEnum):
     REJECTED_QUALITY = "rejected_quality"
 
 
-class ScoreBand(StrEnum):
-    LOW = "low"
-    MID = "mid"
-    HIGH = "high"
-    ELITE = "elite"
+class Trend(StrEnum):
+    IMPROVED = "improved"
+    HELD = "held"
+    DECLINED = "declined"
+    NOT_COMPARABLE = "not_comparable"
 
 
 class CaptureQuality(BaseModel):
@@ -157,21 +175,36 @@ class ScanImage(BaseModel):
     imagePath: str | None
 
 
-class MetricResult(BaseModel):
+class Measurement(BaseModel):
     key: str
-    raw: float
+    value: float
     unit: Unit
-    percentile: float
-    zScore: float
-    reachablePercentile: float
 
 
-class SubScore(BaseModel):
+class MetricChange(BaseModel):
+    key: str
+    unit: Unit
+    current: float
+    baseline: float
+    relativeChange: float
+    trend: Trend
+    significant: bool
+
+
+class GroupProgress(BaseModel):
     group: str
-    score: float
-    reachable: float
-    band: ScoreBand
+    improved: int
+    held: int
+    declined: int
     complete: bool
+
+
+class Progress(BaseModel):
+    baselineScanId: str
+    baselineCapturedAt: datetime
+    daysSinceBaseline: int
+    changes: list[MetricChange]
+    byGroup: list[GroupProgress]
 
 
 class Recommendation(BaseModel):
@@ -182,7 +215,6 @@ class Recommendation(BaseModel):
     category: str
     effort: Literal["daily", "weekly", "one_off"]
     horizonWeeks: int
-    expectedImpact: float
 
 
 class ScanResult(BaseModel):
@@ -190,11 +222,8 @@ class ScanResult(BaseModel):
     status: ScanStatus
     capturedAt: datetime
     images: list[ScanImage]
-    overall: float
-    band: ScoreBand
-    reachable: float
-    subScores: list[SubScore]
-    metrics: list[MetricResult]
+    measurements: list[Measurement]
+    progress: Progress | None
     recommendations: list[Recommendation]
     locked: bool
     engineVersion: str

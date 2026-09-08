@@ -2,59 +2,59 @@ import { router, useLocalSearchParams } from 'expo-router';
 import { View } from 'react-native';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
-import { bandColor, FIXED_METRIC_NOTE, gapCopy } from '@/features/score/band';
-import { formatScore } from '@/features/score/format';
+import { formatMeasurement } from '@/features/progress/format';
+import { NOT_COMPARABLE_NOTE } from '@/features/progress/trend';
 import { spacing } from '@/theme';
 
 /**
- * TODO(faz-2): replace the placeholder numbers with the real scan, add the Skia
- * gauge and the sub-score radar, and gate the metric breakdown on entitlement.
+ * TODO(faz-2): fetch the real scan and render its measurements; render the
+ * progress block when `progress` is non-null, and gate the full breakdown on
+ * entitlement.
  *
- * The headline is deliberately two numbers, not one: today's score alone reads
- * as a verdict, while today-versus-reachable reads as a starting point. That
- * framing is also what keeps the app out of the "attractiveness rating"
- * category in review — see docs/compliance.md.
+ * The first scan has nothing to compare against, so it establishes the baseline
+ * and says so. There is no overall score and no ranking — see docs/norms.md for
+ * why a percentile could not be grounded, and docs/product.md for why progress
+ * against your own baseline is the claim instead.
  */
 export default function ScanResult() {
   const { scanId } = useLocalSearchParams<{ scanId: string }>();
 
-  const overall = 68;
-  const reachable = 79;
+  const measurements = [
+    { key: 'jawline_definition', label: 'Jawline definition', value: 0.62, unit: 'index' },
+    { key: 'symmetry_index', label: 'Symmetry', value: 0.94, unit: 'index' },
+    { key: 'canthal_tilt', label: 'Canthal tilt', value: 5.4, unit: 'deg' },
+  ];
 
   return (
     <Screen scroll>
-      <Text variant="h1">Your baseline</Text>
+      <Text variant="h1">Baseline recorded</Text>
+      <Text tone="secondary">
+        These are your starting measurements. Every future scan is compared against them,
+        not against anyone else.
+      </Text>
       <Text variant="caption" tone="muted">
         scan {scanId}
       </Text>
 
       <Card>
-        <View style={{ flexDirection: 'row', alignItems: 'flex-end', gap: spacing.lg }}>
-          <View>
-            <Text variant="caption" tone="muted">
-              TODAY
+        {measurements.map((measurement) => (
+          <View
+            key={measurement.key}
+            style={{ flexDirection: 'row', justifyContent: 'space-between', gap: spacing.md }}
+          >
+            <Text variant="bodySm" tone="secondary">
+              {measurement.label}
             </Text>
-            <Text variant="display" style={{ color: bandColor(overall) }}>
-              {formatScore(overall)}
-            </Text>
-          </View>
-          <View>
-            <Text variant="caption" tone="muted">
-              REACHABLE
-            </Text>
-            <Text variant="h1" tone="accent">
-              {formatScore(reachable)}
+            <Text variant="mono">
+              {formatMeasurement(measurement.value, measurement.unit)}
             </Text>
           </View>
-        </View>
-        <Text variant="bodySm" tone="secondary">
-          {gapCopy(overall, reachable)}
-        </Text>
+        ))}
       </Card>
 
       <Card>
         <Text variant="bodySm" tone="muted">
-          {FIXED_METRIC_NOTE}
+          {NOT_COMPARABLE_NOTE}
         </Text>
       </Card>
 
@@ -63,8 +63,7 @@ export default function ScanResult() {
           PLACEHOLDER
         </Text>
         <Text variant="bodySm" tone="muted">
-          Sub-score radar and the metric breakdown land in Faz 2. The breakdown is
-          the first thing behind the paywall.
+          Real measurements, the progress comparison and the routine land in Faz 2.
         </Text>
       </Card>
 

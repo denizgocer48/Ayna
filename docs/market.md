@@ -157,6 +157,27 @@ Our decision to serve a mixed 18-35 audience puts us between two established
 positions. That is defensible, but it means two messaging tracks and two sets of
 store screenshots, not one. See `docs/product.md` section 2.
 
+## Three competitors, one template
+
+Reviewed September 2026: Hiface, LooxUP and LooksMax AI run near-identical
+funnels — overall score, category breakdown, a potential-score gap, then a daily
+routine. LooksMax AI has over 10 million downloads and 1.2 million ratings at
+3.99 stars, with Pro at $9.99/week or $29.99/month.
+
+The technical stack is the same one we built: on-device MediaPipe landmarks,
+geometric measurements, then an LLM turning numbers into readable advice. That
+part is not a differentiator and never was.
+
+What they do that we will not is recorded in `docs/product.md` section 8:
+ranking users against each other ("Top 15% of men"), share buttons under the
+score, a masculinity index, and mewing in the routine.
+
+One claim we could not verify: that LooxUP takes payment on the web to avoid
+store commission. Its own landing page describes a three-day trial cancelled
+through device settings, which is store billing. A separate web funnel may exist,
+but nothing on the site evidences it — do not build a strategy on it without
+better sources.
+
 ## Naming: "Ayna" is a problem
 
 `Ayna` means mirror in Turkish. The Turkish App Store already contains multiple

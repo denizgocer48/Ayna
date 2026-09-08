@@ -16,15 +16,14 @@ export default function Paywall() {
     <Screen scroll>
       <Text variant="h1">Ayna Plus</Text>
       <Text tone="secondary">
-        Your full metric breakdown, the routine that closes the gap, and unlimited
-        scans to track it.
+        The routine built from your measurements, and the tracking that shows whether
+        it worked.
       </Text>
 
       <Card>
         <Text variant="label">Free</Text>
         <Text variant="bodySm" tone="secondary">
-          {FREE_SCAN_ALLOWANCE} scan. Overall score, reachable projection and
-          sub-scores.
+          {FREE_SCAN_ALLOWANCE} scan. Your baseline measurements, kept.
         </Text>
       </Card>
 
@@ -33,8 +32,8 @@ export default function Paywall() {
           Plus
         </Text>
         <Text variant="bodySm" tone="secondary">
-          Every metric with its percentile, a routine built from your own numbers,
-          unlimited scans and the progress timeline.
+          A routine built from your own measurements, unlimited scans, and the
+          progress timeline that shows what actually changed.
         </Text>
       </Card>
 

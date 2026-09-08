@@ -90,7 +90,7 @@ fills it in.
 | Area | Where | Notes |
 | --- | --- | --- |
 | Metric catalogue | `packages/shared/src/metrics.ts` | 30 metrics with provenance, mutability and pose. The single source of truth. |
-| Reachable projection | `services/api/app/analysis/scoring.py` | Implemented and unit-tested. `fixed` metrics are excluded by construction. |
+| Progress engine | `services/api/app/analysis/progress.py` | Implemented and unit-tested. Refuses to call bone geometry or sub-noise movement progress. |
 | Contract enforcement | `services/api/tests/test_contract.py` | Compares the TS and Python catalogues key by key, metadata by metadata, group by group. |
 | Capture quality gate | `apps/mobile/src/features/scan/quality.ts` | Pure function over landmark signals. Camera adapter not yet written. |
 | Database schema | `supabase/migrations/` | Three migrations, applied and verified against a local stack. |
@@ -104,8 +104,8 @@ fills it in.
 - **Camera.** `scan/capture.tsx` fakes the capture with a button. VisionCamera is
   installed and its permission strings are in `app.config.ts`, but no preview,
   no overlay, no frame processor.
-- **Scores.** `scan/result/[scanId].tsx` hardcodes `68 → 79` to exercise the
-  layout and `gapCopy()`. No scan is ever fetched.
+- **Measurements.** `scan/result/[scanId].tsx` hardcodes three example values to
+  exercise the layout. No scan is ever fetched.
 - **Auth.** No sign-in anywhere. `src/lib/supabase.ts` is written and correct but
   nothing calls it.
 - **API.** Every route returns `501`. `GET /health` is the only live endpoint.
@@ -140,11 +140,9 @@ Skin analysis, pricing, the name and market scope are all now decided — see
 `docs/skin-analysis.md`, `docs/pricing.md` and `docs/product.md` sections 6 and 7.
 What remains open:
 
-1. **How V1 tells its story without skin.** Parked deliberately as a future
-   feature discussion — see `docs/backlog.md`. Deferring skin shrinks the
-   today-versus-reachable gap from roughly six points to roughly three, so the
-   V1 pitch is progress tracking rather than transformation. Settle this before
-   the store listing copy is written, not before Faz 1 starts.
+1. **Where the routine content comes from.** The routine is now Faz 2 work and
+   every item must be evidence-backed — mewing is blocked by name for exactly
+   this reason. Somebody needs to assemble the item library and its citations.
    V1 plans a hosted API rather than an in-house model (`skin.py` is written
    provider-agnostic on purpose). Nobody has picked one or priced it. Cost
    scales per scan, so it interacts with pricing.

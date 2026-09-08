@@ -2,7 +2,7 @@ import { router } from 'expo-router';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
 
-/** TODO(faz-2): latest score gauge, streak, next routine item. */
+/** TODO(faz-2): latest measurements, streak, next routine item. */
 export default function Home() {
   return (
     <Screen scroll>

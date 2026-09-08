@@ -11,7 +11,7 @@ docs/compliance.md for why each list exists.
 
 import re
 
-from app.schemas import MetricResult, Recommendation
+from app.schemas import Measurement, MetricChange, Recommendation
 
 # Advice that requires a clinician. Claiming to treat a condition would put the
 # app in a regulated medical-device category.
@@ -117,11 +117,25 @@ def policy_violations(text: str) -> list[str]:
     return sorted(found)
 
 
-def generate(metrics: list[MetricResult], goals: list[str], locale: str) -> list[Recommendation]:
+def generate(
+    measurements: list[Measurement],
+    changes: list[MetricChange],
+    goals: list[str],
+    locale: str,
+) -> list[Recommendation]:
     """TODO(faz-2): rule-based selection, then Claude for the personalised copy.
+
+    The model receives the measurement table and what moved since the baseline,
+    never the image. Two consequences: no face data leaves our infrastructure
+    for the LLM call, and every recommendation is attributable to a measurement
+    so the UI can show why it was given.
 
     Every generated recommendation must pass ``policy_violations`` before it is
     written to the database. A violation is a bug in the prompt, not something
     to strip silently — log it so the prompt gets fixed.
+
+    Recommendations must also be evidence-backed. "Mewing" is the obvious
+    counter-example and is blocked by name: there is no controlled evidence it
+    changes adult facial structure, and this app serves adults only.
     """
     raise NotImplementedError("recommendations land in Faz 2")

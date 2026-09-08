@@ -99,7 +99,17 @@ age labels and permits commercial use.
   anthropometric landmarks and the demographic composition of a criminal-justice
   dataset.
 
-## Recommended path
+## Decision taken
+
+**The percentile was removed rather than grounded.** V1 reports measurements and
+change against the user's own baseline, which needs no reference population.
+`metric_norms` and the `scores` table were dropped in migration
+`20260909000000_progress_model.sql`.
+
+This resolves the problem rather than deferring it. Reintroduce norms only with
+data that supports them — the path below stays here for whoever picks that up.
+
+## The path, if percentiles are ever revisited
 
 **Three buckets, not one.**
 
