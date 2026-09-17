@@ -226,7 +226,6 @@ export const tr: Copy = {
     jawline_definition: 'Çene hattı belirginliği',
     chin_projection_ratio: 'Alt üçte bir',
     mandible_width_ratio: 'Çene genişliği',
-    nasofrontal_angle: 'Kaş–burun açısı',
     nose_width_ratio: 'Burun genişliği',
     philtrum_length_ratio: 'Filtrum uzunluğu',
     lip_fullness_ratio: 'Dudak dolgunluğu',
@@ -254,6 +253,8 @@ export const tr: Copy = {
       'Örnek veri. Bunlar sentetik bir yüzün gerçek ölçümleri — seninkini ölçecek olan aynı kod tarafından hesaplandı.',
     notComparable:
       'Ölçülüyor ama ilerleme olarak izlenmiyor — kemik yapısı değişmez, aksini iddia etmeyeceğiz.',
+    photoAlt: 'Bu taramanın ölçtüğü fotoğraf',
+    noPhoto: 'Bu tarama için fotoğraf saklanmadı.',
     buildRoutine: 'Rutinimi oluştur',
   },
 

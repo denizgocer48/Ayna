@@ -226,7 +226,6 @@ export const en = {
     jawline_definition: 'Jawline definition',
     chin_projection_ratio: 'Lower third',
     mandible_width_ratio: 'Jaw width',
-    nasofrontal_angle: 'Brow to nose angle',
     nose_width_ratio: 'Nose width',
     philtrum_length_ratio: 'Philtrum length',
     lip_fullness_ratio: 'Lip fullness',
@@ -254,6 +253,8 @@ export const en = {
       'Sample data. These are real measurements of a synthetic face, computed by the same code that will measure yours.',
     notComparable:
       'Measured, but not tracked as progress — bone structure does not change, and we will not pretend otherwise.',
+    photoAlt: 'The photo this scan measured',
+    noPhoto: 'No photo kept for this scan.',
     buildRoutine: 'Build my routine',
   },
 

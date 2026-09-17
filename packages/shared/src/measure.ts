@@ -188,10 +188,6 @@ export function mandibleWidthRatio(f: FrontPoints): number {
   return ratio(distance(f.leftGonion, f.rightGonion), bizygomaticWidth(f));
 }
 
-export function nasofrontalAngle(f: FrontPoints): number {
-  return angleAt(f.nasion, f.glabella, f.subnasale);
-}
-
 export function noseWidthRatio(f: FrontPoints): number {
   return ratio(distance(f.leftAlare, f.rightAlare), bizygomaticWidth(f));
 }
@@ -278,7 +274,6 @@ export const FRONT_MEASUREMENTS = {
   jawline_definition: jawlineDefinition,
   chin_projection_ratio: chinProjectionRatio,
   mandible_width_ratio: mandibleWidthRatio,
-  nasofrontal_angle: nasofrontalAngle,
   nose_width_ratio: noseWidthRatio,
   philtrum_length_ratio: philtrumLengthRatio,
   lip_fullness_ratio: lipFullnessRatio,

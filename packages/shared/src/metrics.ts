@@ -31,7 +31,6 @@ export const METRIC_KEYS = [
   'jawline_definition',
   'chin_projection_ratio',
   'mandible_width_ratio',
-  'nasofrontal_angle',
   'nose_width_ratio',
   'philtrum_length_ratio',
   'lip_fullness_ratio',
@@ -171,13 +170,6 @@ export const METRIC_META = {
   },
   mandible_width_ratio: {
     unit: 'ratio',
-    provenance: 'geometry',
-    mutability: 'fixed',
-    pose: 'front',
-    direction: 'neutral',
-  },
-  nasofrontal_angle: {
-    unit: 'deg',
     provenance: 'geometry',
     mutability: 'fixed',
     pose: 'front',
@@ -326,8 +318,7 @@ export const METRIC_GROUPS = {
     'submental_cervical_angle',
   ],
   midface: [
-    'nasofrontal_angle',
-    'nose_width_ratio',
+      'nose_width_ratio',
     'philtrum_length_ratio',
     'lip_fullness_ratio',
     'nasofrontal_angle_true',

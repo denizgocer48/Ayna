@@ -35,7 +35,7 @@ not excuse it. This is precisely that exposure.
 | `facial_fifths_balance` | Same. |
 | `jawline_definition` | No anthropometric literature whatsoever. The only validated instrument found is a clinician-rated severity scale for dermal filler trials. |
 | `chin_projection_ratio` (front) | A profile construct. No validated front-photo version found. |
-| `nasofrontal_angle` (front) | Same — inherently a profile measurement. |
+| `nasofrontal_angle` (front) | **Removed from the catalogue.** Inherently a profile measurement, and worse than unsupported: glabella, nasion and subnasale are near-collinear on the midline in a front view, so the angle comes out around 180 degrees for every face. Confirmed on a real photograph — 179.3 degrees. A metric that returns a constant is worse than a missing one, because it fills the screen with something that looks measured and never moves. It survives as `nasofrontal_angle_true`, from the side, where the construct belongs. |
 | `nasal_dorsum_index` | The literature treats the dorsum categorically (straight / concave / convex), not as a continuous ratio with an SD. |
 | `canthal_tilt` | The widely circulated figure traces only to aesthetic-industry blogs restating one another. The claimed primary source could not be located and read. **Treat as unverified.** |
 | `ramus_body_ratio` | The two lengths are usually published separately with SDs; the ratio itself is rarely tabulated. |

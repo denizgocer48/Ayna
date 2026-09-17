@@ -41,7 +41,6 @@ _METRIC_ROWS: tuple[tuple[str, Unit, Provenance, Mutability, str, Direction], ..
     ("jawline_definition",       "index", "geometry",     "slow",       "front", "higher_better"),
     ("chin_projection_ratio",    "ratio", "geometry",     "fixed",      "front", "neutral"),
     ("mandible_width_ratio",     "ratio", "geometry",     "fixed",      "front", "neutral"),
-    ("nasofrontal_angle",        "deg",   "geometry",     "fixed",      "front", "neutral"),
     ("nose_width_ratio",         "ratio", "geometry",     "fixed",      "front", "neutral"),
     ("philtrum_length_ratio",    "ratio", "geometry",     "fixed",      "front", "neutral"),
     ("lip_fullness_ratio",       "ratio", "geometry",     "slow",       "front", "neutral"),
@@ -103,7 +102,6 @@ METRIC_GROUPS: dict[str, tuple[str, ...]] = {
         "submental_cervical_angle",
     ),
     "midface": (
-        "nasofrontal_angle",
         "nose_width_ratio",
         "philtrum_length_ratio",
         "lip_fullness_ratio",
