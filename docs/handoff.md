@@ -109,6 +109,20 @@ The traps below all cost time once already. They are in this order for a reason.
    Expo autolinking reads the exclusion only from there and offers no
    environment variable.
 
+9. **Xcode 26 removed the standalone Simulator app.** `simctl boot` starts a
+   device headlessly — it really is running, and `simctl io … screenshot` will
+   happily capture it, but nothing appears on screen. `open -a Simulator` fails
+   with "Unable to find application named 'Simulator'" because the app no longer
+   exists.
+
+   To see a simulator, open `DeviceHub.app` from
+   `/Applications/Xcode.app/Contents/Applications/`, or use Xcode's
+   Window > Devices and Simulators.
+
+   This is an easy hour to lose: automated screenshots keep working, so
+   everything looks fine from a script while the person at the machine sees
+   nothing at all.
+
    The simulator has no camera in any case, so **the capture path can only be
    exercised on a physical phone**. On a simulator build the capture screen says
    so and offers to continue through the rest of the flow, so the interface can
