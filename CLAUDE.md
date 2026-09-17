@@ -13,6 +13,7 @@ is ever uploaded.
 - `docs/product.md` — the four decisions the whole build rests on, plus positioning
 - `docs/market.md` — what the incumbents got wrong, and the rules that follow
 - `docs/architecture.md` — how a scan flows through the system
+- `docs/supabase.md` — project setup, RLS verification, and scale economics
 - `docs/compliance.md` — the constraints that are legal requirements
 - `docs/roadmap.md` — what each `TODO(faz-N)` marker means
 

@@ -8,6 +8,7 @@ answer "why is it built this way".
 | [handoff.md](handoff.md) | **Read first.** Current status, environment traps, what is real versus placeholder, and the next task in order. |
 | [backlog.md](backlog.md) | Parked decisions to revisit deliberately, and decisions ruled out that should not be reopened without new evidence. |
 | [product.md](product.md) | The decisions the whole build rests on: the two-number score, the audience, the paywall model, the V1 scope, the name, the market. |
+| [supabase.md](supabase.md) | Creating and linking the project, verifying RLS against it, and what the bill looks like at a million users. |
 | [architecture.md](architecture.md) | How a scan flows from camera to score. Why analysis is a separate queued service. |
 | [compliance.md](compliance.md) | The constraints that are legal requirements rather than preferences. Read before touching photos, consent or scoring. |
 | [roadmap.md](roadmap.md) | What each `TODO(faz-N)` marker in the code means, phase by phase. |
