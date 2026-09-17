@@ -84,6 +84,68 @@ export const tr: Copy = {
     home: 'Ana sayfaya dön',
   },
 
+  tasks: {
+    sleep_consistent: {
+      title: 'Aynı saatte uyu',
+      why: 'Düzensiz uyku ilk olarak gözlerin etrafında görünür.',
+    },
+    evening_sodium: {
+      title: 'Akşam tuzu azalt',
+      why: 'Sabah şişkinliğinin olağan sebebi akşam alınan sodyumdur.',
+    },
+    sunscreen: {
+      title: 'Her sabah güneş koruyucu',
+      why: 'Yıllar içinde cildin için yapabileceğin en iyi desteklenen tek şey.',
+    },
+    cleanse_twice: {
+      title: 'Sabah ve akşam temizle',
+      why: 'Yağ ve günün kalıntısı yerleşmeden cildinden çıkar.',
+    },
+    moisturise: {
+      title: 'Temizlikten sonra nemlendir',
+      why: 'Temizlenmiş cilt hızla su kaybeder; dokuyu dengede tutan budur.',
+    },
+    hydration: {
+      title: 'Gün boyu su iç',
+      why: 'Düzenli alım, akşam açığı kapatmaktan iyidir.',
+    },
+    cardio: {
+      title: 'Bu hafta üç kardiyo',
+      why: 'Çene hattını gerçekten değiştiren şey vücut kompozisyonudur. Aylar sürer, haftalar değil.',
+    },
+    posture_check: {
+      title: 'Boyun duruşunu kontrol et',
+      why: 'Öne çıkık baş, çene altının görünümünü değiştirir.',
+    },
+    facial_hair_trim: {
+      title: 'Sakalını düzelt',
+      why: 'Belirgin bir sınır, çene için satın alabileceğin çoğu şeyden fazlasını yapar.',
+    },
+    scalp_care: {
+      title: 'Saç derine bak',
+      why: 'Saç bakımı saçın altından başlar.',
+    },
+  },
+
+  routine: {
+    todayLabel: 'BUGÜN',
+    weeklyLabel: 'BU HAFTA',
+    effortLabel: 'ÇABA',
+    points: 'puan',
+    completedOf: '{{total}} görevin {{done}} tanesi',
+    streak: '{{days}} günlük seri',
+    empty: 'İlk taramanı yap ya da bir hedef seç, rutinin burada belirir.',
+    whyLabel: 'Neden',
+  },
+
+  scanTiming: {
+    first: 'Başlangıç referansı için ilk taramanı yap.',
+    tooEarly: '{{days}} gün önce tarandı. Değişimi ölçmek için henüz çok erken.',
+    early: '{{days}} gün önce tarandı. Şimdi tarayabilirsin ama değişim henüz ölçülebilir olmayabilir.',
+    due: 'Yeni tarama için hazırsın.',
+    nextIn: 'Sonraki tarama {{days}} gün sonra',
+  },
+
   tabs: {
     home: 'Bugün',
     plan: 'Plan',
@@ -93,6 +155,7 @@ export const tr: Copy = {
 
   home: {
     title: 'Bugün',
+    scanLabel: 'ÖLÇÜM',
     noScanLabel: 'HENÜZ TARAMA YOK',
     noScanBody:
       'Başlangıç referansını oluşturmak için ilk taramanı yap. Bundan sonraki her şey buna göre ölçülür.',

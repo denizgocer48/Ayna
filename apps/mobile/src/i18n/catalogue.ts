@@ -39,9 +39,20 @@ export function resolveLocale(preference: LocalePreference): SupportedLocale {
  * Look up one string. Falls back to English for a key the translation is
  * missing — an untranslated string a user can still read beats one they cannot.
  */
-export function translate(key: CopyKey, locale: SupportedLocale): string {
-  const fromLocale = lookup(CATALOGUES[locale], key);
-  return fromLocale ?? lookup(en, key) ?? key;
+export function translate(
+  key: CopyKey,
+  locale: SupportedLocale,
+  values?: Record<string, string | number>,
+): string {
+  const template = lookup(CATALOGUES[locale], key) ?? lookup(en, key) ?? key;
+  return values ? interpolate(template, values) : template;
+}
+
+/** Replaces `{{name}}` with a supplied value, leaving unknown names in place. */
+function interpolate(template: string, values: Record<string, string | number>): string {
+  return template.replace(/\{\{(\w+)\}\}/g, (match, name: string) =>
+    name in values ? String(values[name]) : match,
+  );
 }
 
 function lookup(catalogue: unknown, key: string): string | undefined {

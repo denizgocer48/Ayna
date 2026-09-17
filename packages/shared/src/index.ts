@@ -1,4 +1,6 @@
+export * from './cadence';
 export * from './capture';
+export * from './effort';
 export * from './geometry';
 export * from './measure';
 export * from './metrics';
@@ -7,3 +9,4 @@ export * from './profile';
 export * from './resolve-points';
 export * from './sample-face';
 export * from './scan';
+export * from './tasks';

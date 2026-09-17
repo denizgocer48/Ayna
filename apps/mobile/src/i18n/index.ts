@@ -17,8 +17,8 @@ export {
  * renders text must call `useT()` instead — otherwise its strings will not
  * change when the language does.
  */
-export function t(key: CopyKey): string {
-  return translate(key, useLocaleStore.getState().locale);
+export function t(key: CopyKey, values?: Record<string, string | number>): string {
+  return translate(key, useLocaleStore.getState().locale, values);
 }
 
 /**
@@ -27,7 +27,7 @@ export function t(key: CopyKey): string {
  * Returns a function with the same shape as `t`, so call sites read identically
  * and the only difference is that this component re-renders on a change.
  */
-export function useT(): (key: CopyKey) => string {
+export function useT(): (key: CopyKey, values?: Record<string, string | number>) => string {
   const locale = useLocaleStore((state) => state.locale);
-  return (key: CopyKey) => translate(key, locale);
+  return (key, values) => translate(key, locale, values);
 }

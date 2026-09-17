@@ -11,6 +11,8 @@ export const StorageKeys = {
   ageConfirmed: 'consent.age',
   consentVersion: 'consent.version',
   lastScanId: 'scan.last',
+  lastScanDate: 'scan.lastDate',
+  completions: 'routine.completions',
   colorScheme: 'ui.colorScheme',
   localePreference: 'ui.locale',
 } as const;

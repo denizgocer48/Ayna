@@ -85,6 +85,68 @@ export const en = {
     home: 'Go home',
   },
 
+  tasks: {
+    sleep_consistent: {
+      title: 'Sleep at a consistent time',
+      why: 'Irregular sleep shows first around the eyes.',
+    },
+    evening_sodium: {
+      title: 'Go light on salt in the evening',
+      why: 'Evening sodium is the usual cause of morning puffiness.',
+    },
+    sunscreen: {
+      title: 'Sunscreen every morning',
+      why: 'The single best-supported thing you can do for your skin over years.',
+    },
+    cleanse_twice: {
+      title: 'Cleanse morning and night',
+      why: 'Keeps oil and the day off your skin before it settles in.',
+    },
+    moisturise: {
+      title: 'Moisturise after cleansing',
+      why: 'A cleansed face loses water fast; this is what keeps texture even.',
+    },
+    hydration: {
+      title: 'Drink water through the day',
+      why: 'Steady intake beats catching up in the evening.',
+    },
+    cardio: {
+      title: 'Three cardio sessions this week',
+      why: 'Body composition is what actually moves a jawline. Months, not weeks.',
+    },
+    posture_check: {
+      title: 'Check your neck posture',
+      why: 'A forward head changes how the area under the chin reads.',
+    },
+    facial_hair_trim: {
+      title: 'Tidy your facial hair',
+      why: 'A defined edge does more for the jaw than most things you can buy.',
+    },
+    scalp_care: {
+      title: 'Look after your scalp',
+      why: 'Hair care starts below the hair.',
+    },
+  },
+
+  routine: {
+    todayLabel: 'TODAY',
+    weeklyLabel: 'THIS WEEK',
+    effortLabel: 'EFFORT',
+    points: 'points',
+    completedOf: '{{done}} of {{total}} done',
+    streak: '{{days}} day streak',
+    empty: 'Take your first scan, or pick a goal, and your routine appears here.',
+    whyLabel: 'Why',
+  },
+
+  scanTiming: {
+    first: 'Take your first scan to set a baseline.',
+    tooEarly: 'Scanned {{days}} days ago. Too soon to measure a change.',
+    early: 'Scanned {{days}} days ago. You can scan now, but a change may not be measurable yet.',
+    due: 'Ready for your next scan.',
+    nextIn: 'Next scan in {{days}} days',
+  },
+
   tabs: {
     home: 'Home',
     plan: 'Plan',
@@ -94,6 +156,7 @@ export const en = {
 
   home: {
     title: 'Today',
+    scanLabel: 'MEASUREMENT',
     noScanLabel: 'NO SCAN YET',
     noScanBody:
       'Take your first scan to set a baseline. Everything after this is measured against it.',

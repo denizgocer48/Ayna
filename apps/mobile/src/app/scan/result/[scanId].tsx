@@ -1,6 +1,6 @@
 import { sampleMeasurements } from '@ayna/shared';
 import { router, useLocalSearchParams } from 'expo-router';
-import { useMemo } from 'react';
+import { useEffect, useMemo } from 'react';
 import { View } from 'react-native';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
@@ -10,6 +10,7 @@ import {
   groupMeasurements,
   metricLabel,
 } from '@/features/progress/format';
+import { today, useRoutineStore } from '@/features/routine/store';
 import { useT } from '@/i18n';
 import { spacing } from '@/theme';
 
@@ -32,6 +33,13 @@ export default function ScanResult() {
   // build without a camera shows what the pipeline actually produces rather
   // than numbers typed into a mockup.
   const isSample = scanId === 'sample';
+  const recordScan = useRoutineStore((state) => state.recordScan);
+
+  // Completing a scan is what the scan cadence counts from.
+  useEffect(() => {
+    recordScan(today());
+  }, [recordScan]);
+
   const grouped = useMemo(
     () => groupMeasurements(sampleMeasurements({ withProfile: true })),
     [],
