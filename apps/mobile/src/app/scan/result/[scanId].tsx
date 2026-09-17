@@ -10,7 +10,7 @@ import {
   groupMeasurements,
   metricLabel,
 } from '@/features/progress/format';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 import { spacing } from '@/theme';
 
 /**
@@ -25,6 +25,7 @@ import { spacing } from '@/theme';
  * is non-null, and gate the full breakdown on entitlement.
  */
 export default function ScanResult() {
+  const t = useT();
   const { scanId } = useLocalSearchParams<{ scanId: string }>();
 
   // Real output of the real measurement code, run over a synthetic face, so a

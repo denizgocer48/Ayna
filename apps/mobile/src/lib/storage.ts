@@ -12,6 +12,7 @@ export const StorageKeys = {
   consentVersion: 'consent.version',
   lastScanId: 'scan.last',
   colorScheme: 'ui.colorScheme',
+  localePreference: 'ui.locale',
 } as const;
 
 export const kv = {

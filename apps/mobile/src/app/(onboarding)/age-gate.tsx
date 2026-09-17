@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { View } from 'react-native';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 import { spacing } from '@/theme';
 
 /**
@@ -13,6 +13,7 @@ import { spacing } from '@/theme';
  * from the analysis flow entirely rather than degraded.
  */
 export default function AgeGate() {
+  const t = useT();
   const [blocked, setBlocked] = useState(false);
 
   if (blocked) {

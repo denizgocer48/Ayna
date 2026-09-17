@@ -14,7 +14,10 @@
  * "needs a physical device" state.
  *
  * Autolinking reads this from package.json only — there is no environment
- * variable for it — so the flag has to be written to disk.
+ * variable for it — so the flag has to be written to disk. It is only needed
+ * while the Podfile is generated, so `ios:sim` restores it immediately after
+ * prebuild: the committed package.json always describes the real product, and a
+ * simulator build leaves the working tree clean.
  *
  *   npm run ios:sim      # excludes the detector, then builds
  *   npm run ios:device   # includes it, then builds to a phone

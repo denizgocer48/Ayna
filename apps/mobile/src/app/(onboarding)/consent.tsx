@@ -5,7 +5,8 @@ import { Pressable, View } from 'react-native';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
 import { useTheme } from '@/hooks/use-theme';
-import { currentLocale, t } from '@/i18n';
+import { useLocaleStore } from '@/lib/locale-store';
+import { useT } from '@/i18n';
 import { AnalyticsEvents, track } from '@/lib/analytics';
 import { kv, StorageKeys } from '@/lib/storage';
 import { radius, spacing } from '@/theme';
@@ -23,11 +24,12 @@ import { radius, spacing } from '@/theme';
  * we need to know which translation they saw.
  */
 export default function Consent() {
+  const t = useT();
   const { colors } = useTheme();
   const [accepted, setAccepted] = useState(false);
 
   function grant() {
-    const locale = currentLocale();
+    const locale = useLocaleStore.getState().locale;
     // TODO(faz-1): also insert into `consent_events`. Local storage alone does
     // not satisfy has_active_biometric_consent(), so every scan insert will be
     // rejected by RLS until this writes to the database.

@@ -4,7 +4,7 @@ import { ActivityIndicator, View } from 'react-native';
 
 import { Screen, Text } from '@/components/ui';
 import { useTheme } from '@/hooks/use-theme';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 import { spacing } from '@/theme';
 
 /**
@@ -23,6 +23,7 @@ import { spacing } from '@/theme';
  * uses, and stands in for that request.
  */
 export default function Analyzing() {
+  const t = useT();
   const { colors } = useTheme();
   const { sample } = useLocalSearchParams<{ sample?: string }>();
 

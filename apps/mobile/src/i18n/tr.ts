@@ -36,6 +36,54 @@ export const tr: Copy = {
       'Ayna biyometrik veri sayılan yüz ölçümlerini analiz eder. Bunu yalnızca yetişkinlere sunuyoruz. Dürüstlüğün için teşekkürler.',
   },
 
+  settings: {
+    title: 'Profil',
+    languageLabel: 'DİL',
+    languageSystem: 'Cihazımı izle',
+    languageBody: 'Rıza metni hukuken bağlayıcıdır, bu yüzden hangi dilde okuduğun kayda geçer.',
+    dangerLabel: 'GELİŞTİRME',
+    resetLocal: 'Yerel durumu sıfırla',
+    accountPlaceholder:
+      'Hesap, abonelik, rıza geri çekme ve veri silme Faz 1\'de geliyor.',
+  },
+
+  plan: {
+    title: 'Planın',
+    placeholder: 'Rutin ve günlük işaretleme Faz 2\'de geliyor.',
+  },
+
+  progress: {
+    title: 'İlerleme',
+    body: 'Her tarama ilkiyle karşılaştırılır. Puan yok, başkalarıyla sıralama yok.',
+    placeholder: 'Zaman çizelgesi ve önce/sonra karşılaştırması Faz 2\'de geliyor.',
+  },
+
+  paywall: {
+    title: 'Ayna Plus',
+    body: 'Ölçümlerinden kurulan rutin ve işe yarayıp yaramadığını gösteren takip.',
+    freeLabel: 'Ücretsiz',
+    freeBody: 'Bir tarama. Başlangıç ölçümlerin saklanır.',
+    plusLabel: 'Plus',
+    plusBody:
+      'Kendi ölçümlerinden kurulan bir rutin, sınırsız tarama ve gerçekte neyin değiştiğini gösteren ilerleme çizelgesi.',
+    placeholder:
+      'RevenueCat ürünleri henüz bağlanmadı. Ürünler, fiyat ve deneme süresi Faz 4\'te kararlaşıyor.',
+  },
+
+  onboarding: {
+    profileTitle: 'Senin hakkında',
+    profileBody: 'Yaşın ve cinsiyetin, ölçümlerinin hangi referans aralığıyla karşılaştırılacağını belirler.',
+    profilePlaceholder: 'Doğum yılı ve cinsiyet seçicileri Faz 1\'de geliyor.',
+    goalsTitle: 'Neyin üzerinde çalışmak istiyorsun?',
+    goalsBody: 'En fazla dört tane seç. Bu rutinini şekillendirir, ölçümlerini değil.',
+    goalsPlaceholder: 'Hedef seçenekleri Faz 1\'de geliyor.',
+  },
+
+  notFound: {
+    title: 'Ekran bulunamadı',
+    home: 'Ana sayfaya dön',
+  },
+
   tabs: {
     home: 'Bugün',
     plan: 'Plan',
@@ -73,6 +121,11 @@ export const tr: Copy = {
     simulatorBody:
       'Simulator\'da kamera yok ve yüz dedektörü simulator derlemelerine dahil edilmiyor. Tarama yapmak için fiziksel bir telefonda çalıştır. Buradan uygulamanın geri kalanını yine de gezebilirsin.',
     simulatorContinue: 'Örnek veriyle devam et',
+    consistencyLabel: 'KARŞILAŞTIRILABİLİR TARAMA İÇİN',
+    consistency1: 'Pencereye ya da dengeli bir ışığa dön. Tepeden spot olmasın.',
+    consistency2: 'Telefonu göz hizasında, kolun tamamen açık tut.',
+    consistency3: 'Saçını alnından çek, gözlüğünü çıkar.',
+    consistency4: 'Her seferinde aynı ışığı ve günün aynı saatini kullan.',
     hints: {
       noFace: 'Yüzünü ovalin içine al',
       multipleFaces: 'Karede yalnızca sen ol',

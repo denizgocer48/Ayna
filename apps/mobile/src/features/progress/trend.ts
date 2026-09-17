@@ -52,7 +52,3 @@ export function progressHeadline(changes: MetricChange[], daysSinceBaseline: num
   }
   return `${improved} improved, ${declined} slipped.`;
 }
-
-/** Shown against every measurement that cannot show progress. */
-export const NOT_COMPARABLE_NOTE =
-  'Measured, but not tracked as progress — bone structure does not change, and we will not pretend otherwise.';

@@ -1,7 +1,7 @@
-import { FREE_SCAN_ALLOWANCE } from '@ayna/shared';
 import { router } from 'expo-router';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
+import { useT } from '@/i18n';
 
 /**
  * TODO(faz-4): wire to RevenueCat offerings for the `ENTITLEMENT` product.
@@ -12,42 +12,28 @@ import { Button, Card, Screen, Text } from '@/components/ui';
  * empty app (Guideline 4.2).
  */
 export default function Paywall() {
+  const t = useT();
   return (
     <Screen scroll>
-      <Text variant="h1">Ayna Plus</Text>
-      <Text tone="secondary">
-        The routine built from your measurements, and the tracking that shows whether
-        it worked.
-      </Text>
+      <Text variant="h1">{t('paywall.title')}</Text>
+      <Text tone="secondary">{t('paywall.body')}</Text>
 
       <Card>
-        <Text variant="label">Free</Text>
-        <Text variant="bodySm" tone="secondary">
-          {FREE_SCAN_ALLOWANCE} scan. Your baseline measurements, kept.
-        </Text>
+        <Text variant="label">{t('paywall.freeLabel')}</Text>
+        <Text variant="bodySm" tone="secondary">{t('paywall.freeBody')}</Text>
       </Card>
 
       <Card>
-        <Text variant="label" tone="accent">
-          Plus
-        </Text>
-        <Text variant="bodySm" tone="secondary">
-          A routine built from your own measurements, unlimited scans, and the
-          progress timeline that shows what actually changed.
-        </Text>
+        <Text variant="label" tone="accent">{t('paywall.plusLabel')}</Text>
+        <Text variant="bodySm" tone="secondary">{t('paywall.plusBody')}</Text>
       </Card>
 
       <Card>
-        <Text variant="label" tone="accent">
-          PLACEHOLDER
-        </Text>
-        <Text variant="bodySm" tone="muted">
-          RevenueCat offerings are not wired yet. Products, pricing and trial length
-          are decided in Faz 4.
-        </Text>
+        <Text variant="label" tone="accent">{t('common.placeholder')}</Text>
+        <Text variant="bodySm" tone="muted">{t('paywall.placeholder')}</Text>
       </Card>
 
-      <Button label="Close" variant="secondary" onPress={() => router.back()} />
+      <Button label={t('common.close')} variant="secondary" onPress={() => router.back()} />
     </Screen>
   );
 }

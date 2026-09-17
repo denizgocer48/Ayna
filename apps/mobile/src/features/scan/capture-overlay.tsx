@@ -7,7 +7,7 @@ import { Text } from '@/components/ui';
 import { hintFor } from '@/features/scan/hints';
 import { useTheme } from '@/hooks/use-theme';
 import { motion, radius, spacing, trendColors } from '@/theme';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 
 /**
  * The face oval and the one thing to fix.
@@ -21,6 +21,7 @@ import { t } from '@/i18n';
  * own face-ratio window, so filling it is the same thing as passing the check.
  */
 export function CaptureOverlay({ quality }: { quality: CaptureQuality | null }) {
+  const t = useT();
   const { colors } = useTheme();
   const issue = quality ? primaryIssue(quality) : null;
   const ready = quality?.ok === true;

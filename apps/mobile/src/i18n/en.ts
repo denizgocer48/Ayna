@@ -37,6 +37,54 @@ export const en = {
       'Ayna analyses facial measurements, which counts as biometric data. We only offer that to adults. Thanks for your honesty.',
   },
 
+  settings: {
+    title: 'Profile',
+    languageLabel: 'LANGUAGE',
+    languageSystem: 'Match my device',
+    languageBody: 'Consent text is legally operative, so it is recorded in the language you read it in.',
+    dangerLabel: 'DEVELOPMENT',
+    resetLocal: 'Reset local state',
+    accountPlaceholder:
+      'Account, subscription, consent withdrawal and data deletion land in Faz 1.',
+  },
+
+  plan: {
+    title: 'Your plan',
+    placeholder: 'The routine and its daily check-off land in Faz 2.',
+  },
+
+  progress: {
+    title: 'Progress',
+    body: 'Every scan is compared to your first one. No score, no ranking against other people.',
+    placeholder: 'Timeline and before/after comparison land in Faz 2.',
+  },
+
+  paywall: {
+    title: 'Ayna Plus',
+    body: 'The routine built from your measurements, and the tracking that shows whether it worked.',
+    freeLabel: 'Free',
+    freeBody: 'One scan. Your baseline measurements, kept.',
+    plusLabel: 'Plus',
+    plusBody:
+      'A routine built from your own measurements, unlimited scans, and the progress timeline that shows what actually changed.',
+    placeholder:
+      'RevenueCat offerings are not wired yet. Products, pricing and trial length are decided in Faz 4.',
+  },
+
+  onboarding: {
+    profileTitle: 'About you',
+    profileBody: 'Your age and sex decide which reference range your measurements are compared to.',
+    profilePlaceholder: 'Birth year and sex pickers land in Faz 1.',
+    goalsTitle: 'What do you want to work on?',
+    goalsBody: 'Pick up to four. This shapes your routine, not your measurements.',
+    goalsPlaceholder: 'Goal chips land in Faz 1.',
+  },
+
+  notFound: {
+    title: 'Screen not found',
+    home: 'Go home',
+  },
+
   tabs: {
     home: 'Home',
     plan: 'Plan',
@@ -73,6 +121,11 @@ export const en = {
     simulatorBody:
       'The simulator has no camera, and the face detector is not built into simulator builds. Run on a physical phone to take a scan. You can still walk through the rest of the app from here.',
     simulatorContinue: 'Continue with sample data',
+    consistencyLabel: 'FOR COMPARABLE SCANS',
+    consistency1: 'Face a window or an even light. No overhead spotlight.',
+    consistency2: 'Hold the phone at eye level, arm fully extended.',
+    consistency3: 'Pull hair off the forehead, remove glasses.',
+    consistency4: 'Use the same light and time of day every time.',
     hints: {
       noFace: 'Center your face in the oval',
       multipleFaces: 'Only you in the frame, please',

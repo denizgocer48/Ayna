@@ -2,10 +2,11 @@ import { router } from 'expo-router';
 import { View } from 'react-native';
 
 import { Button, Screen, Text } from '@/components/ui';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 import { spacing } from '@/theme';
 
 export default function Welcome() {
+  const t = useT();
   return (
     <Screen>
       <View style={{ flex: 1, justifyContent: 'center', gap: spacing.md }}>

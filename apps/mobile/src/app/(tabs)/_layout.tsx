@@ -3,13 +3,14 @@ import { SymbolView } from 'expo-symbols';
 import type { ColorValue } from 'react-native';
 
 import { useTheme } from '@/hooks/use-theme';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 
 function TabIcon({ name, color }: { name: string; color: ColorValue }) {
   return <SymbolView name={name as never} tintColor={color} size={26} />;
 }
 
 export default function TabsLayout() {
+  const t = useT();
   const { colors } = useTheme();
 
   return (

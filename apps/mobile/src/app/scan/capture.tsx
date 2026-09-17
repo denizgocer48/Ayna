@@ -7,10 +7,10 @@ import { useCameraDevice, useCameraPermission } from 'react-native-vision-camera
 import { Button, Card, Screen, Text } from '@/components/ui';
 import { CaptureOverlay } from '@/features/scan/capture-overlay';
 import { FaceCamera, faceDetectionSupported } from '@/features/scan/face-camera';
-import { POSE_COPY, POSE_ORDER } from '@/features/scan/poses';
+import { CONSISTENCY_KEYS, POSE_COPY, POSE_ORDER } from '@/features/scan/poses';
 import { useFaceCapture } from '@/features/scan/use-face-capture';
 import { useTheme } from '@/hooks/use-theme';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 import { AnalyticsEvents, track } from '@/lib/analytics';
 import { radius, spacing } from '@/theme';
 
@@ -26,6 +26,7 @@ import { radius, spacing } from '@/theme';
  * avoid.
  */
 export default function Capture() {
+  const t = useT();
   const { colors } = useTheme();
   const { hasPermission, canRequestPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice('front');
@@ -136,6 +137,19 @@ export default function Capture() {
         <Text variant="bodySm" tone="secondary">
           {copy ? t(copy.hintKey) : ''}
         </Text>
+
+        {next === 'front' ? (
+          <Card>
+            <Text variant="label" tone="accent">
+              {t('capture.consistencyLabel')}
+            </Text>
+            {CONSISTENCY_KEYS.map((key) => (
+              <Text key={key} variant="bodySm" tone="secondary">
+                {t(key)}
+              </Text>
+            ))}
+          </Card>
+        ) : null}
 
         {retry ? (
           <Card>

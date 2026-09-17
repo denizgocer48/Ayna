@@ -10,9 +10,6 @@ export function metricLabel(key: MetricKey): string {
   return t(`metrics.${key}`);
 }
 
-/** Shown on a group the scan could not fully measure. */
-export const INCOMPLETE_NOTE = 'Add a side photo to complete this';
-
 /**
  * Measurements are unitless ratios, bounded indices, or degrees. None of them
  * wants more than two decimals — extra digits imply a precision the landmark

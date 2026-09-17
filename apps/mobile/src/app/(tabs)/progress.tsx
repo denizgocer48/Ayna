@@ -1,27 +1,26 @@
 import { Card, Screen, Text } from '@/components/ui';
-import { NOT_COMPARABLE_NOTE } from '@/features/progress/trend';
+import { useT } from '@/i18n';
 
 /** TODO(faz-2): measurement timeline and the before/after comparison. */
 export default function Progress() {
+  const t = useT();
   return (
     <Screen scroll>
-      <Text variant="h1">Progress</Text>
-      <Text tone="secondary">
-        Every scan is compared to your first one. No score, no ranking against other people.
-      </Text>
+      <Text variant="h1">{t('progress.title')}</Text>
+      <Text tone="secondary">{t('progress.body')}</Text>
 
       <Card>
         <Text variant="bodySm" tone="muted">
-          {NOT_COMPARABLE_NOTE}
+          {t('result.notComparable')}
         </Text>
       </Card>
 
       <Card>
         <Text variant="label" tone="accent">
-          PLACEHOLDER
+          {t('common.placeholder')}
         </Text>
         <Text variant="bodySm" tone="muted">
-          Timeline and before/after comparison land in Faz 2.
+          {t('progress.placeholder')}
         </Text>
       </Card>
     </Screen>

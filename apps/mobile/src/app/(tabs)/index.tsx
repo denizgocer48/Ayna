@@ -1,10 +1,11 @@
 import { router } from 'expo-router';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
-import { t } from '@/i18n';
+import { useT } from '@/i18n';
 
 /** TODO(faz-2): latest measurements, streak, next routine item. */
 export default function Home() {
+  const t = useT();
   return (
     <Screen scroll>
       <Text variant="h1">{t('home.title')}</Text>
