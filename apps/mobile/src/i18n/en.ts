@@ -75,9 +75,28 @@ export const en = {
     profileTitle: 'About you',
     profileBody: 'Your age and sex decide which reference range your measurements are compared to.',
     profilePlaceholder: 'Birth year and sex pickers land in Faz 1.',
+    birthYear: 'BIRTH YEAR',
+    yearEarlier: 'Previous birth year',
+    yearLater: 'Next birth year',
+    sexLabel: 'SEX',
+    sex: {
+      female: 'Female',
+      male: 'Male',
+      prefer_not_to_say: 'Prefer not to say',
+    },
     goalsTitle: 'What do you want to work on?',
     goalsBody: 'Pick up to four. This shapes your routine, not your measurements.',
     goalsPlaceholder: 'Goal chips land in Faz 1.',
+    goalsSelected: '{{count}} of 4 selected',
+    goal: {
+      skin_clarity: 'Clearer-looking skin',
+      jawline: 'Jawline definition',
+      hair: 'Hair care',
+      facial_hair: 'Facial hair',
+      body_composition: 'Body composition',
+      sleep: 'Sleep consistency',
+      overall_confidence: 'Overall confidence',
+    },
   },
 
   notFound: {

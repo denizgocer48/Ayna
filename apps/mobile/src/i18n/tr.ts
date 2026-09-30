@@ -74,9 +74,28 @@ export const tr: Copy = {
     profileTitle: 'Senin hakkında',
     profileBody: 'Yaşın ve cinsiyetin, ölçümlerinin hangi referans aralığıyla karşılaştırılacağını belirler.',
     profilePlaceholder: 'Doğum yılı ve cinsiyet seçicileri Faz 1\'de geliyor.',
+    birthYear: 'DOĞUM YILI',
+    yearEarlier: 'Önceki doğum yılı',
+    yearLater: 'Sonraki doğum yılı',
+    sexLabel: 'CİNSİYET',
+    sex: {
+      female: 'Kadın',
+      male: 'Erkek',
+      prefer_not_to_say: 'Belirtmek istemiyorum',
+    },
     goalsTitle: 'Neyin üzerinde çalışmak istiyorsun?',
     goalsBody: 'En fazla dört tane seç. Bu rutinini şekillendirir, ölçümlerini değil.',
     goalsPlaceholder: 'Hedef seçenekleri Faz 1\'de geliyor.',
+    goalsSelected: '4 hedeften {{count}} tanesi seçildi',
+    goal: {
+      skin_clarity: 'Daha berrak görünen cilt',
+      jawline: 'Çene hattı belirginliği',
+      hair: 'Saç bakımı',
+      facial_hair: 'Sakal ve bıyık bakımı',
+      body_composition: 'Vücut kompozisyonu',
+      sleep: 'Düzenli uyku',
+      overall_confidence: 'Genel özgüven',
+    },
   },
 
   notFound: {

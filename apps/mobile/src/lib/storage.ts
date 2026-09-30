@@ -6,6 +6,11 @@ import { createMMKV } from 'react-native-mmkv';
  */
 export const storage = createMMKV({ id: 'ayna' });
 
+// Expo Router renders routes on the server for web, where MMKV cannot access
+// device storage. The client evaluates this module again during hydration, so
+// server reads can safely use empty defaults and server writes can be ignored.
+const isServer = typeof window === 'undefined';
+
 export const StorageKeys = {
   onboardingCompleted: 'onboarding.completed',
   ageConfirmed: 'consent.age',
@@ -15,13 +20,22 @@ export const StorageKeys = {
   completions: 'routine.completions',
   colorScheme: 'ui.colorScheme',
   localePreference: 'ui.locale',
+  onboardingProfile: 'onboarding.profile',
 } as const;
 
 export const kv = {
-  getBool: (key: string) => storage.getBoolean(key) ?? false,
-  setBool: (key: string, value: boolean) => storage.set(key, value),
-  getString: (key: string) => storage.getString(key),
-  setString: (key: string, value: string) => storage.set(key, value),
-  remove: (key: string) => storage.remove(key),
-  clearAll: () => storage.clearAll(),
+  getBool: (key: string) => (isServer ? false : storage.getBoolean(key) ?? false),
+  setBool: (key: string, value: boolean) => {
+    if (!isServer) storage.set(key, value);
+  },
+  getString: (key: string) => (isServer ? undefined : storage.getString(key)),
+  setString: (key: string, value: string) => {
+    if (!isServer) storage.set(key, value);
+  },
+  remove: (key: string) => {
+    if (!isServer) storage.remove(key);
+  },
+  clearAll: () => {
+    if (!isServer) storage.clearAll();
+  },
 };
