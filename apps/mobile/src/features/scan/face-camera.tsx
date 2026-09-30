@@ -1,5 +1,6 @@
 import * as Device from 'expo-device';
 import type { ComponentProps } from 'react';
+import type { CameraOutput } from 'react-native-vision-camera';
 
 import type { DetectedFace } from '@/features/scan/face-signals';
 
@@ -19,6 +20,7 @@ type FaceCameraProps = {
   style?: ComponentProps<'view'>['style'];
   device: unknown;
   isActive: boolean;
+  outputs?: CameraOutput[];
   onFacesDetected: (faces: DetectedFace[]) => void;
   onError: (error: Error) => void;
 };

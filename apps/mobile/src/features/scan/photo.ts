@@ -1,3 +1,4 @@
+import { METRIC_META, type CaptureQuality, type MetricKey } from '@ayna/shared';
 import { Directory, File, Paths } from 'expo-file-system';
 
 /**
@@ -40,6 +41,49 @@ export function ensureScansDirectory(): void {
  * a juxtaposition that reads as a measurement of them and is not one.
  */
 export type StoredMeasurement = { key: string; value: number; unit: string };
+
+type LocalScan = {
+  capturedAt: string;
+  capture: { pose: 'front'; quality: CaptureQuality };
+  measurements: StoredMeasurement[];
+};
+
+/**
+ * Save a completed scan in app-private storage. The photograph and landmarks
+ * never cross the network boundary; only the derived scalar measurements are
+ * written beside the local photo.
+ */
+export async function saveLocalScan(
+  temporaryPhotoPath: string,
+  quality: CaptureQuality,
+  values: Partial<Record<MetricKey, number>>,
+): Promise<string> {
+  ensureScansDirectory();
+
+  const scanId = `local-${Date.now().toString(36)}-${Math.random().toString(36).slice(2, 10)}`;
+  const photo = scanPhotoFile(scanId);
+  const metadata = new File(Paths.document, SCANS_DIRECTORY, `${scanId}.json`);
+  const measurements = (Object.entries(values) as [MetricKey, number][]).map(([key, value]) => ({
+    key,
+    value,
+    unit: METRIC_META[key].unit,
+  }));
+  const record: LocalScan = {
+    capturedAt: new Date().toISOString(),
+    capture: { pose: 'front', quality },
+    measurements,
+  };
+
+  try {
+    await new File(temporaryPhotoPath).copy(photo);
+    metadata.write(JSON.stringify(record));
+    return scanId;
+  } catch (error) {
+    if (photo.exists) photo.delete();
+    if (metadata.exists) metadata.delete();
+    throw error;
+  }
+}
 
 export async function scanMeasurements(scanId: string): Promise<StoredMeasurement[] | null> {
   try {

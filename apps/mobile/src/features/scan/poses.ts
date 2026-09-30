@@ -7,7 +7,10 @@ import type { CopyKey } from '@/i18n';
  * measured ones — gonial angle and chin projection are guessed from the front
  * and measured from the side.
  */
-export const POSE_ORDER: readonly Pose[] = ['front', 'side'] as const;
+// Side capture stays out of the flow until profile landmarks have a tested
+// resolver. Presenting front-derived estimates as side measurements would make
+// the result look more precise than it is.
+export const POSE_ORDER: readonly Pose[] = ['front'] as const;
 
 export const POSE_COPY: Record<
   Pose,

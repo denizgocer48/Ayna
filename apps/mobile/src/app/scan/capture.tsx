@@ -1,12 +1,16 @@
-import type { Pose } from '@ayna/shared';
 import { router } from 'expo-router';
 import { useState } from 'react';
 import { ActivityIndicator, StyleSheet, View } from 'react-native';
-import { useCameraDevice, useCameraPermission } from 'react-native-vision-camera';
+import {
+  useCameraDevice,
+  useCameraPermission,
+  usePhotoOutput,
+} from 'react-native-vision-camera';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
 import { CaptureOverlay } from '@/features/scan/capture-overlay';
 import { FaceCamera, faceDetectionSupported } from '@/features/scan/face-camera';
+import { saveLocalScan } from '@/features/scan/photo';
 import { CONSISTENCY_KEYS, POSE_COPY, POSE_ORDER } from '@/features/scan/poses';
 import { useFaceCapture } from '@/features/scan/use-face-capture';
 import { useTheme } from '@/hooks/use-theme';
@@ -30,17 +34,18 @@ export default function Capture() {
   const { colors } = useTheme();
   const { hasPermission, canRequestPermission, requestPermission } = useCameraPermission();
   const device = useCameraDevice('front');
+  const photoOutput = usePhotoOutput({ containerFormat: 'jpeg', quality: 0.92 });
   const { quality, onFacesDetected, measure } = useFaceCapture();
 
-  const [captured, setCaptured] = useState<Pose[]>([]);
   const [retry, setRetry] = useState(false);
+  const [saving, setSaving] = useState(false);
 
-  const next = POSE_ORDER.find((pose) => !captured.includes(pose));
+  const next = POSE_ORDER[0];
   const copy = next ? POSE_COPY[next] : null;
 
-  function onShutter() {
+  async function onShutter() {
     const measurements = measure();
-    if (!measurements) {
+    if (!measurements || !quality) {
       // The face moved between the last detection and the tap.
       setRetry(true);
       track(AnalyticsEvents.captureRejected, { reason: 'stale_frame' });
@@ -48,17 +53,19 @@ export default function Capture() {
     }
 
     setRetry(false);
-    // TODO(faz-1): keep the measurements for this pose, then submit both.
-    if (next === 'front' && POSE_ORDER.length > 1) {
-      setCaptured((poses) => [...poses, 'front']);
-      return;
-    }
-    submit();
-  }
+    setSaving(true);
 
-  function submit() {
-    track(AnalyticsEvents.scanSubmitted, { poses: captured.length + 1 });
-    router.push('/scan/analyzing');
+    try {
+      const photo = await photoOutput.capturePhotoToFile({}, {});
+      const scanId = await saveLocalScan(photo.filePath, quality, measurements);
+      track(AnalyticsEvents.scanSubmitted, { poses: 1 });
+      router.push({ pathname: '/scan/analyzing', params: { scanId } });
+    } catch {
+      setRetry(true);
+      track(AnalyticsEvents.captureRejected, { reason: 'save_error' });
+    } finally {
+      setSaving(false);
+    }
   }
 
   /** A build without a camera walks the rest of the flow on the sample face. */
@@ -120,6 +127,7 @@ export default function Capture() {
           style={StyleSheet.absoluteFill}
           device={device}
           isActive
+          outputs={[photoOutput]}
           onFacesDetected={onFacesDetected}
           onError={() => track(AnalyticsEvents.captureRejected, { reason: 'camera_error' })}
         />
@@ -161,12 +169,10 @@ export default function Capture() {
 
         <Button
           label={t('capture.shutter')}
-          disabled={quality?.ok !== true}
-          onPress={onShutter}
+          disabled={quality?.ok !== true || saving}
+          loading={saving}
+          onPress={() => void onShutter()}
         />
-        {next === 'side' ? (
-          <Button label={t('capture.skipSide')} variant="secondary" onPress={submit} />
-        ) : null}
         <Button label={t('common.cancel')} variant="ghost" onPress={() => router.back()} />
       </View>
     </Screen>

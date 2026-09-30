@@ -25,16 +25,20 @@ import { spacing } from '@/theme';
 export default function Analyzing() {
   const t = useT();
   const { colors } = useTheme();
-  const { sample } = useLocalSearchParams<{ sample?: string }>();
+  const { sample, scanId } = useLocalSearchParams<{ sample?: string; scanId?: string }>();
 
   useEffect(() => {
-    if (sample !== '1') return;
+    const destination = sample === '1' ? 'sample' : scanId;
+    if (!destination) return;
 
     // Roughly what the real round trip costs, so the transition is not a
     // flash — but nothing here is pretending to compute.
-    const timer = setTimeout(() => router.replace('/scan/result/sample'), 1200);
+    const timer = setTimeout(
+      () => router.replace({ pathname: '/scan/result/[scanId]', params: { scanId: destination } }),
+      sample === '1' ? 1200 : 350,
+    );
     return () => clearTimeout(timer);
-  }, [sample]);
+  }, [sample, scanId]);
 
   return (
     <Screen>
