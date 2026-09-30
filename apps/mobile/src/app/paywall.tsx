@@ -1,4 +1,5 @@
 import { router } from 'expo-router';
+import { SafeAreaProvider } from 'react-native-safe-area-context';
 
 import { Button, Card, Screen, Text } from '@/components/ui';
 import { useT } from '@/i18n';
@@ -13,27 +14,32 @@ import { useT } from '@/i18n';
  */
 export default function Paywall() {
   const t = useT();
+  // The sheet opens below the status bar, but the root provider still reports
+  // the full-screen inset, which left a status-bar-sized gap above the title.
+  // A provider of its own measures the sheet rather than the window.
   return (
-    <Screen scroll>
-      <Text variant="h1">{t('paywall.title')}</Text>
-      <Text tone="secondary">{t('paywall.body')}</Text>
+    <SafeAreaProvider>
+      <Screen scroll>
+        <Text variant="h1">{t('paywall.title')}</Text>
+        <Text tone="secondary">{t('paywall.body')}</Text>
 
-      <Card>
-        <Text variant="label">{t('paywall.freeLabel')}</Text>
-        <Text variant="bodySm" tone="secondary">{t('paywall.freeBody')}</Text>
-      </Card>
+        <Card>
+          <Text variant="label">{t('paywall.freeLabel')}</Text>
+          <Text variant="bodySm" tone="secondary">{t('paywall.freeBody')}</Text>
+        </Card>
 
-      <Card>
-        <Text variant="label" tone="accent">{t('paywall.plusLabel')}</Text>
-        <Text variant="bodySm" tone="secondary">{t('paywall.plusBody')}</Text>
-      </Card>
+        <Card>
+          <Text variant="label" tone="accent">{t('paywall.plusLabel')}</Text>
+          <Text variant="bodySm" tone="secondary">{t('paywall.plusBody')}</Text>
+        </Card>
 
-      <Card>
-        <Text variant="label" tone="accent">{t('common.placeholder')}</Text>
-        <Text variant="bodySm" tone="muted">{t('paywall.placeholder')}</Text>
-      </Card>
+        <Card>
+          <Text variant="label" tone="accent">{t('common.placeholder')}</Text>
+          <Text variant="bodySm" tone="muted">{t('paywall.placeholder')}</Text>
+        </Card>
 
-      <Button label={t('common.close')} variant="secondary" onPress={() => router.back()} />
-    </Screen>
+        <Button label={t('common.close')} variant="secondary" onPress={() => router.back()} />
+      </Screen>
+    </SafeAreaProvider>
   );
 }
